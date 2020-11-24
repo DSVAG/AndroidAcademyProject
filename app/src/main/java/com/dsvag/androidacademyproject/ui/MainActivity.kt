@@ -1,8 +1,9 @@
-package com.dsvag.androidacademyproject
+package com.dsvag.androidacademyproject.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dsvag.androidacademyproject.databinding.ActivityMainBinding
+import com.dsvag.androidacademyproject.data.utils.viewBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,6 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
+
     }
 }
