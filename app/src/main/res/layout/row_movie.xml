@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_movie">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/kek"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/previewMask"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_mask"
+        app:layout_constraintBottom_toBottomOf="@+id/preview"
+        app:layout_constraintEnd_toEndOf="@+id/preview"
+        app:layout_constraintStart_toStartOf="@+id/preview"
+        app:layout_constraintTop_toTopOf="@+id/tags" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/ageLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/bg_age_limit"
+        android:gravity="center_vertical"
+        android:padding="4dp"
+        android:textColor="@color/not_white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/preview"
+        app:layout_constraintTop_toTopOf="@+id/preview"
+        tools:text="13+" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/favorite"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="8dp"
+        android:button="@drawable/ic_baseline_favorite"
+        android:theme="@style/Theme.CheckBox"
+        app:layout_constraintEnd_toEndOf="@+id/preview"
+        app:layout_constraintTop_toTopOf="@+id/preview" />
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/rating"
+        style="@style/Theme.RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center_vertical"
+        android:isIndicator="true"
+        android:max="5"
+        app:layout_constraintBottom_toBottomOf="@+id/review"
+        app:layout_constraintStart_toStartOf="@+id/preview"
+        app:layout_constraintTop_toTopOf="@+id/review"
+        tools:rating="2.5" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:textColor="@color/red"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/review"
+        app:layout_constraintEnd_toEndOf="@+id/review"
+        app:layout_constraintStart_toStartOf="@+id/rating"
+        tools:text="Action" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/review"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:textColor="@color/grey"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/preview"
+        app:layout_constraintEnd_toEndOf="@id/preview"
+        app:layout_constraintStart_toEndOf="@+id/rating"
+        tools:text="100 Reviews" />
+
+    <LinearLayout
+        android:id="@+id/kek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            tools:text="Avengers: End Game" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/length"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:textColor="@color/grey"
+            android:textSize="12sp"
+            tools:text="137 min" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
