@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dsvag.androidacademyproject.R
@@ -41,8 +42,7 @@ class MovieListFragment : Fragment() {
     private fun generateMovies() = listOf(
         Movie(
             "Avengers: End Game",
-            requireContext().getDrawable(R.drawable.pic_avengers)!!,
-            requireContext().getDrawable(R.drawable.pic_avengers2)!!,
+            requireContext().getDrawable(R.drawable.pic_avengers)!!.toBitmap(),
             listOf("Action", "Adventure", "Drama"),
             13,
             4.2,
@@ -57,22 +57,22 @@ class MovieListFragment : Fragment() {
         Actor(
             "Robert",
             "Downey Jr.",
-            requireContext().getDrawable(R.drawable.pic_downey)!!,
+            requireContext().getDrawable(R.drawable.pic_downey)!!.toBitmap(),
         ),
         Actor(
             "Chris",
             "Evans",
-            requireContext().getDrawable(R.drawable.pic_evans)!!,
+            requireContext().getDrawable(R.drawable.pic_evans)!!.toBitmap(),
         ),
         Actor(
             "Mark",
             "Ruffalo",
-            requireContext().getDrawable(R.drawable.pic_ruffalo)!!,
+            requireContext().getDrawable(R.drawable.pic_ruffalo)!!.toBitmap(),
         ),
         Actor(
             "Chris",
             "Hemsworth",
-            requireContext().getDrawable(R.drawable.pic_hemsworth)!!,
+            requireContext().getDrawable(R.drawable.pic_hemsworth)!!.toBitmap(),
         ),
     )
 }

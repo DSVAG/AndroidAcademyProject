@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.data.adapters.ActorAdapter
 import com.dsvag.androidacademyproject.data.adapters.ItemDecoration
 import com.dsvag.androidacademyproject.data.models.Movie
@@ -24,12 +26,6 @@ class MovieDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
 
-        val maybeMovie = arguments?.getSerializable("movie")
-
-        if (maybeMovie != null) {
-            setData(maybeMovie as Movie)
-        }
-
         binding.castList.setHasFixedSize(true)
         binding.castList.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -38,6 +34,16 @@ class MovieDetailsFragment : Fragment() {
         binding.castList.addItemDecoration(ItemDecoration(10))
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val maybeMovie = arguments?.getParcelable<Movie>("movie")
+
+        if (maybeMovie != null) {
+            setData(maybeMovie)
+        }
     }
 
     override fun onDestroy() {
@@ -56,7 +62,7 @@ class MovieDetailsFragment : Fragment() {
 
         Glide
             .with(this)
-            .load(movie.preview2)
+            .load(requireContext().getDrawable(R.drawable.pic_avengers2)!!.toBitmap())
             .optionalCenterInside()
             .into(binding.preview)
     }

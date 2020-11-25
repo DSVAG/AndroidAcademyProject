@@ -1,12 +1,13 @@
 package com.dsvag.androidacademyproject.data.models
 
-import android.graphics.drawable.Drawable
-import java.io.Serializable
+import android.graphics.Bitmap
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-data class Movie(
+@Parcelize
+class Movie(
     val name: String,
-    val preview: Drawable,
-    val preview2: Drawable,
+    val preview: Bitmap,
     val tags: List<String>,
     val ageLimit: Int,
     val rating: Double,
@@ -14,4 +15,4 @@ data class Movie(
     val storyLine: String,
     val cast: List<Actor>,
     val length: Int,
-) : Serializable
+) : Parcelable

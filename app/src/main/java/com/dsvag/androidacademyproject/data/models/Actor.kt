@@ -1,10 +1,12 @@
 package com.dsvag.androidacademyproject.data.models
 
-import android.graphics.drawable.Drawable
-import java.io.Serializable
+import android.graphics.Bitmap
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-data class Actor(
+@Parcelize
+class Actor(
     val firstName: String,
     val lastName: String,
-    val photo: Drawable,
-) : Serializable
+    val photo: Bitmap,
+) : Parcelable

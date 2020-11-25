@@ -23,7 +23,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         holder.bind(movieList[position])
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply { putSerializable("movie", movieList[position]) }
+            val bundle = Bundle().apply { putParcelable("movie", movieList[position]) }
             holder.itemView.findNavController()
                 .navigate(R.id.action_movieListFragment_to_movieDetailsFragment, bundle)
         }
