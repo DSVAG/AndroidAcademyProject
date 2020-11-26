@@ -48,11 +48,12 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             itemBinding.review.text = movie.reviews.toString().plus(" Reviews")
             itemBinding.tags.text = movie.tags.joinToString(", ")
             itemBinding.rating.rating = movie.rating.toFloat()
+            itemBinding.preview.clipToOutline = true
 
             Glide
                 .with(itemBinding.root)
                 .load(movie.preview)
-                .optionalCenterInside()
+                .fitCenter()
                 .into(itemBinding.preview)
         }
     }

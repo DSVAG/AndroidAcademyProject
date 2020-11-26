@@ -31,7 +31,7 @@ class MovieDetailsFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.castList.adapter = castAdapter
 
-        binding.castList.addItemDecoration(ItemDecoration(10))
+        binding.castList.addItemDecoration(ItemDecoration(8))
 
         return binding.root
     }

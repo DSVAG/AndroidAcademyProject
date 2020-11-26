@@ -8,6 +8,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dsvag.androidacademyproject.R
+import com.dsvag.androidacademyproject.data.adapters.ItemDecoration
 import com.dsvag.androidacademyproject.data.adapters.MovieAdapter
 import com.dsvag.androidacademyproject.data.models.Actor
 import com.dsvag.androidacademyproject.data.models.Movie
@@ -29,6 +30,8 @@ class MovieListFragment : Fragment() {
         binding.moveList.setHasFixedSize(true)
         binding.moveList.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.moveList.adapter = movieAdapter
+
+        binding.moveList.addItemDecoration(ItemDecoration(8))
 
         return binding.root
     }

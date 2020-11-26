@@ -36,6 +36,7 @@ class ActorAdapter : RecyclerView.Adapter<ActorAdapter.ActorViewHolder>() {
         fun bind(actor: Actor) {
             itemBinding.firstName.text = actor.firstName
             itemBinding.lastName.text = actor.lastName
+            itemBinding.photo.clipToOutline = true
 
             Glide
                 .with(itemBinding.root)

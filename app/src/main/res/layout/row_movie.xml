@@ -9,12 +9,13 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/preview"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_margin="1dp"
         app:layout_constraintBottom_toTopOf="@+id/kek"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/pic_avengers" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/previewMask"
@@ -24,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/preview"
         app:layout_constraintEnd_toEndOf="@+id/preview"
         app:layout_constraintStart_toStartOf="@+id/preview"
-        app:layout_constraintTop_toTopOf="@+id/tags" />
+        app:layout_constraintTop_toTopOf="@+id/preview" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/ageLimit"
@@ -32,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@drawable/bg_age_limit"
+        android:fontFamily="@font/roboto_medium"
         android:gravity="center_vertical"
         android:padding="4dp"
         android:textColor="@color/not_white"
@@ -42,10 +44,12 @@
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/favorite"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:button="@drawable/ic_baseline_favorite"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
         android:theme="@style/Theme.CheckBox"
         app:layout_constraintEnd_toEndOf="@+id/preview"
         app:layout_constraintTop_toTopOf="@+id/preview" />
@@ -59,6 +63,8 @@
         android:gravity="center_vertical"
         android:isIndicator="true"
         android:max="5"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/review"
         app:layout_constraintStart_toStartOf="@+id/preview"
         app:layout_constraintTop_toTopOf="@+id/review"
@@ -69,7 +75,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:paddingHorizontal="8dp"
+        android:fontFamily="@font/roboto_medium"
         android:paddingVertical="4dp"
         android:textColor="@color/red"
         android:textSize="12sp"
@@ -83,6 +89,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/roboto_medium"
         android:gravity="center_vertical"
         android:paddingHorizontal="8dp"
         android:paddingVertical="4dp"
@@ -97,7 +104,6 @@
         android:id="@+id/kek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +113,8 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="start"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:textColor="?attr/colorOnSurface"
@@ -118,8 +125,9 @@
             android:id="@+id/length"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
             android:gravity="center_vertical"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="16dp"
             android:paddingVertical="4dp"
             android:textColor="@color/grey"
             android:textSize="12sp"
