@@ -3,6 +3,7 @@ buildscript {
     ext.navVersion = "2.3.1"
     ext.roomVersion = "2.3.0-alpha03"
     ext.lifecycleVersion = "2.2.0"
+    ext.glideVersion = "4.11.0"
 
     repositories {
         google()
