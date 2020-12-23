@@ -5,17 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.dsvag.androidacademyproject.data.adapters.ActorAdapter
 import com.dsvag.androidacademyproject.data.adapters.ItemDecoration
 import com.dsvag.androidacademyproject.data.models.Movie
-import com.dsvag.androidacademyproject.data.utils.loadMovies
 import com.dsvag.androidacademyproject.databinding.FragmentMovieDetailsBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MovieDetailsFragment : Fragment() {
 
@@ -42,12 +37,8 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieId = requireArguments().getInt("movieId")
-
-
-        lifecycleScope.launch(Dispatchers.Main) {
-            getMovieFromId(movieId)?.let { setData(it) }
-        }
+        val movie = requireArguments().getParcelable<Movie>("movie")!!
+        setData(movie)
     }
 
     override fun onDestroy() {
@@ -55,16 +46,6 @@ class MovieDetailsFragment : Fragment() {
         _binding = null
     }
 
-    private suspend fun getMovieFromId(id: Int): Movie? = withContext(Dispatchers.Default) {
-        var result: Movie? = null
-        loadMovies(requireContext()).forEach { movie ->
-            if (movie.id == id) {
-                result = movie
-                return@forEach
-            }
-        }
-        return@withContext result
-    }
 
     private fun setData(movie: Movie) {
         binding.preview.clipToOutline = true

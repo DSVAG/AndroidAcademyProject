@@ -2,6 +2,7 @@ package com.dsvag.androidacademyproject.data.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dsvag.androidacademyproject.R
@@ -36,12 +37,13 @@ class ActorAdapter : RecyclerView.Adapter<ActorAdapter.ActorViewHolder>() {
         fun bind(actor: Actor) {
             itemBinding.name.text = actor.name
             itemBinding.photo.clipToOutline = true
+            itemBinding.photo.background =
+                ContextCompat.getDrawable(itemBinding.root.context, R.drawable.bg_actor_photo)
 
             Glide
                 .with(itemBinding.root)
                 .load(actor.picture)
-                .optionalFitCenter()
-                .placeholder(R.drawable.bg_actor_photo)
+                .optionalCenterInside()
                 .into(itemBinding.photo)
         }
     }

@@ -1,5 +1,9 @@
 package com.dsvag.androidacademyproject.data.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Movie(
     val id: Int,
     val title: String,
@@ -12,4 +16,4 @@ data class Movie(
     val runtime: Int,
     val genres: List<Genre> = listOf(),
     val actors: List<Actor> = listOf(),
-)
+) : Parcelable

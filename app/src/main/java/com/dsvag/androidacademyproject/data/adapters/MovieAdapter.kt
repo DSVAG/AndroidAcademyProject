@@ -3,6 +3,7 @@ package com.dsvag.androidacademyproject.data.adapters
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -23,7 +24,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         holder.bind(movieList[position])
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply { putInt("movieId", movieList[position].id) }
+            val bundle = Bundle().apply { putParcelable("movie", movieList[position]) }
             holder.itemView.findNavController()
                 .navigate(R.id.action_movieListFragment_to_movieDetailsFragment, bundle)
         }
@@ -43,6 +44,8 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
         fun bind(movie: Movie) {
             itemBinding.preview.clipToOutline = true
+            itemBinding.preview.background =
+                ContextCompat.getDrawable(itemBinding.root.context, R.drawable.bg_movie)
 
             itemBinding.name.text = movie.title
             itemBinding.length.text = movie.runtime.toString().plus(" minutes")
