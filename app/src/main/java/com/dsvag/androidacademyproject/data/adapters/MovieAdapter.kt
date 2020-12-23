@@ -23,7 +23,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         holder.bind(movieList[position])
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply { putParcelable("movie", movieList[position]) }
+            val bundle = Bundle().apply { putInt("movieId", movieList[position].id) }
             holder.itemView.findNavController()
                 .navigate(R.id.action_movieListFragment_to_movieDetailsFragment, bundle)
         }
@@ -42,18 +42,19 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(movie: Movie) {
-            itemBinding.name.text = movie.name
-            itemBinding.length.text = movie.length.toString().plus(" minutes")
-            itemBinding.ageLimit.text = movie.ageLimit.toString().plus("+")
-            itemBinding.review.text = movie.reviews.toString().plus(" Reviews")
-            itemBinding.tags.text = movie.tags.joinToString(", ")
-            itemBinding.rating.rating = movie.rating.toFloat()
             itemBinding.preview.clipToOutline = true
+
+            itemBinding.name.text = movie.title
+            itemBinding.length.text = movie.runtime.toString().plus(" minutes")
+            itemBinding.ageLimit.text = movie.minimumAge.toString().plus("+")
+            itemBinding.tags.text = movie.genres.joinToString(", ") { it.name }
+            itemBinding.review.text = movie.numberOfRatings.toString().plus(" Reviews")
+            itemBinding.rating.rating = movie.ratings / 2
 
             Glide
                 .with(itemBinding.root)
-                .load(movie.preview)
-                .fitCenter()
+                .load(movie.poster)
+                .optionalFitCenter()
                 .into(itemBinding.preview)
         }
     }

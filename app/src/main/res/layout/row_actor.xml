@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
@@ -12,27 +12,24 @@
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:background="@drawable/bg_actor_photo"
-        app:srcCompat="@drawable/pic_downey" />
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/firstName"
-        android:layout_width="match_parent"
+        android:id="@+id/name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
         android:paddingHorizontal="4dp"
-        android:paddingVertical="1dp"
+        android:paddingVertical="2dp"
         android:textColor="@color/white"
-        tools:text="Robert" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo"
+        tools:text="@tools:sample/full_names" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/lastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
-        android:paddingHorizontal="4dp"
-        android:paddingVertical="1dp"
-        android:textColor="@color/white"
-        tools:text="Downey Jr." />
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

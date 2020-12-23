@@ -1,7 +1,6 @@
 package com.dsvag.androidacademyproject.data.models
 
-data class Actor(
+data class Genre(
     val id: Int,
     val name: String,
-    val picture: String,
 )

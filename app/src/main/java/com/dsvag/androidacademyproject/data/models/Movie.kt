@@ -1,18 +1,15 @@
 package com.dsvag.androidacademyproject.data.models
 
-import android.graphics.Bitmap
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
-class Movie(
-    val name: String,
-    val preview: Bitmap,
-    val tags: List<String>,
-    val ageLimit: Int,
-    val rating: Double,
-    val reviews: Int,
-    val storyLine: String,
-    val cast: List<Actor>,
-    val length: Int,
-) : Parcelable
+data class Movie(
+    val id: Int,
+    val title: String,
+    val overview: String,
+    val poster: String,
+    val backdrop: String,
+    val ratings: Float,
+    val numberOfRatings: Int,
+    val minimumAge: Int,
+    val runtime: Int,
+    val genres: List<Genre> = listOf(),
+    val actors: List<Actor> = listOf(),
+)

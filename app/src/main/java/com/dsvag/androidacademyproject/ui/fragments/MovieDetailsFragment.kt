@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.data.adapters.ActorAdapter
 import com.dsvag.androidacademyproject.data.adapters.ItemDecoration
 import com.dsvag.androidacademyproject.data.models.Movie
+import com.dsvag.androidacademyproject.data.utils.loadMovies
 import com.dsvag.androidacademyproject.databinding.FragmentMovieDetailsBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MovieDetailsFragment : Fragment() {
 
@@ -39,10 +42,11 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val maybeMovie = arguments?.getParcelable<Movie>("movie")
+        val movieId = requireArguments().getInt("movieId")
 
-        if (maybeMovie != null) {
-            setData(maybeMovie)
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            getMovieFromId(movieId)?.let { setData(it) }
         }
     }
 
@@ -51,19 +55,33 @@ class MovieDetailsFragment : Fragment() {
         _binding = null
     }
 
+    private suspend fun getMovieFromId(id: Int): Movie? = withContext(Dispatchers.Default) {
+        var result: Movie? = null
+        loadMovies(requireContext()).forEach { movie ->
+            if (movie.id == id) {
+                result = movie
+                return@forEach
+            }
+        }
+        return@withContext result
+    }
+
     private fun setData(movie: Movie) {
-        binding.name.text = movie.name
-        binding.tags.text = movie.tags.joinToString(", ")
-        binding.rating.rating = movie.rating.toFloat()
-        binding.review.text = movie.reviews.toString().plus(" Reviews")
-        binding.storyline.text = movie.storyLine
-        binding.ageLimit.text = movie.ageLimit.toString().plus('+')
-        castAdapter.setData(movie.cast)
+        binding.preview.clipToOutline = true
+
+        binding.name.text = movie.title
+        binding.ageLimit.text = movie.minimumAge.toString().plus("+")
+        binding.tags.text = movie.genres.joinToString(", ") { it.name }
+        binding.review.text = movie.numberOfRatings.toString().plus(" Reviews")
+        binding.rating.rating = movie.ratings / 2
+        binding.storyline.text = movie.overview
+        binding.ageLimit.text = movie.minimumAge.toString().plus('+')
+        castAdapter.setData(movie.actors)
 
         Glide
             .with(this)
-            .load(requireContext().getDrawable(R.drawable.pic_avengers2)!!.toBitmap())
-            .optionalCenterInside()
+            .load(movie.backdrop)
+            .optionalFitCenter()
             .into(binding.preview)
     }
 }

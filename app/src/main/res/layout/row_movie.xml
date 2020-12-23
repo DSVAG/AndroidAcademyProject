@@ -11,11 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/kek"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/pic_avengers" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/previewMask"
@@ -60,12 +59,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:gravity="center_vertical"
         android:isIndicator="true"
-        android:max="5"
         android:minWidth="0dp"
         android:minHeight="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/review"
+        app:layout_constraintBottom_toBottomOf="@+id/preview"
         app:layout_constraintStart_toStartOf="@+id/preview"
         app:layout_constraintTop_toTopOf="@+id/review"
         tools:rating="2.5" />
@@ -79,8 +76,7 @@
         android:paddingVertical="4dp"
         android:textColor="@color/red"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/review"
-        app:layout_constraintEnd_toEndOf="@+id/review"
+        app:layout_constraintBottom_toTopOf="@+id/rating"
         app:layout_constraintStart_toStartOf="@+id/rating"
         tools:text="Action" />
 
@@ -105,9 +101,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/preview">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/name"
@@ -115,7 +114,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
             android:gravity="start"
-            android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:textColor="?attr/colorOnSurface"
             android:textSize="16sp"
@@ -127,7 +125,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center_vertical"
-            android:paddingHorizontal="16dp"
             android:paddingVertical="4dp"
             android:textColor="@color/grey"
             android:textSize="12sp"

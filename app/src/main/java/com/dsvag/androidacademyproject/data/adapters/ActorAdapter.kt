@@ -34,14 +34,13 @@ class ActorAdapter : RecyclerView.Adapter<ActorAdapter.ActorViewHolder>() {
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(actor: Actor) {
-            itemBinding.firstName.text = actor.firstName
-            itemBinding.lastName.text = actor.lastName
+            itemBinding.name.text = actor.name
             itemBinding.photo.clipToOutline = true
 
             Glide
                 .with(itemBinding.root)
-                .load(actor.photo)
-                .optionalCenterInside()
+                .load(actor.picture)
+                .optionalFitCenter()
                 .placeholder(R.drawable.bg_actor_photo)
                 .into(itemBinding.photo)
         }
