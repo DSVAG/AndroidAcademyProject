@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.fragments
+package com.dsvag.androidacademyproject.ui.fragments.moviedetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.dsvag.androidacademyproject.data.adapters.ActorAdapter
-import com.dsvag.androidacademyproject.data.adapters.ItemDecoration
-import com.dsvag.androidacademyproject.data.models.Movie
+import com.dsvag.androidacademyproject.ui.adapters.ActorAdapter
+import com.dsvag.androidacademyproject.ui.adapters.ItemDecoration
+import com.dsvag.androidacademyproject.models.Movie
 import com.dsvag.androidacademyproject.databinding.FragmentMovieDetailsBinding
 
 class MovieDetailsFragment : Fragment() {

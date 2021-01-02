@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.data.adapters
+package com.dsvag.androidacademyproject.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dsvag.androidacademyproject.R
-import com.dsvag.androidacademyproject.data.models.Actor
+import com.dsvag.androidacademyproject.models.Actor
 import com.dsvag.androidacademyproject.databinding.RowActorBinding
 
 class ActorAdapter : RecyclerView.Adapter<ActorAdapter.ActorViewHolder>() {

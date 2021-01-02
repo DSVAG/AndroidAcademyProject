@@ -1,9 +1,9 @@
 package com.dsvag.androidacademyproject.data.utils
 
 import android.content.Context
-import com.dsvag.androidacademyproject.data.models.Actor
-import com.dsvag.androidacademyproject.data.models.Genre
-import com.dsvag.androidacademyproject.data.models.Movie
+import com.dsvag.androidacademyproject.models.Actor
+import com.dsvag.androidacademyproject.models.Genre
+import com.dsvag.androidacademyproject.models.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName

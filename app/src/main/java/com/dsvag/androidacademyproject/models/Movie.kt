@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.data.models
+package com.dsvag.androidacademyproject.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

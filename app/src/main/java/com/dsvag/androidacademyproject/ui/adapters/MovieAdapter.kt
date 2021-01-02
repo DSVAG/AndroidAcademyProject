@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.data.adapters
+package com.dsvag.androidacademyproject.ui.adapters
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dsvag.androidacademyproject.R
-import com.dsvag.androidacademyproject.data.models.Movie
 import com.dsvag.androidacademyproject.databinding.RowMovieBinding
+import com.dsvag.androidacademyproject.models.Movie
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 

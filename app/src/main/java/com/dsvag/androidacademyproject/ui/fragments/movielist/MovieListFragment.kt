@@ -1,5 +1,6 @@
-package com.dsvag.androidacademyproject.ui.fragments
+package com.dsvag.androidacademyproject.ui.fragments.movielist
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.dsvag.androidacademyproject.data.adapters.ItemDecoration
-import com.dsvag.androidacademyproject.data.adapters.MovieAdapter
-import com.dsvag.androidacademyproject.data.models.Movie
-import com.dsvag.androidacademyproject.data.viewmodels.MoviesViewModel
 import com.dsvag.androidacademyproject.databinding.FragmentMovieListBinding
+import com.dsvag.androidacademyproject.models.Movie
+import com.dsvag.androidacademyproject.ui.adapters.ItemDecoration
+import com.dsvag.androidacademyproject.ui.adapters.MovieAdapter
+import com.dsvag.androidacademyproject.ui.viewmodels.MoviesViewModel
 
 class MovieListFragment : Fragment() {
 
@@ -35,7 +36,13 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.moveList.setHasFixedSize(true)
-        binding.moveList.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        if (requireActivity().resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            binding.moveList.layoutManager = GridLayoutManager(requireContext(), 4)
+        } else {
+            binding.moveList.layoutManager = GridLayoutManager(requireContext(), 2)
+        }
+
         binding.moveList.adapter = movieAdapter
 
         binding.moveList.addItemDecoration(ItemDecoration(8))

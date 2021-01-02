@@ -1,10 +1,10 @@
-package com.dsvag.androidacademyproject.data.viewmodels
+package com.dsvag.androidacademyproject.ui.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
 import com.dsvag.androidacademyproject.data.di.getAppComponent
-import com.dsvag.androidacademyproject.data.models.Movie
 import com.dsvag.androidacademyproject.data.repositories.MovieRepository
+import com.dsvag.androidacademyproject.models.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

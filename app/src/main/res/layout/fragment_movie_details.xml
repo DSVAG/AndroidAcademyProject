@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background"
-    tools:context=".ui.fragments.MovieDetailsFragment">
+    tools:context=".ui.fragments.moviedetails.MovieDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="Storyline"
+                android:text="@string/storyline"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
@@ -132,7 +132,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="Cast"
+                android:text="@string/cast"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
