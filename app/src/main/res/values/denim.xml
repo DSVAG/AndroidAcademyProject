@@ -3,4 +3,5 @@
     <dimen name="smallCornerSize">8dp</dimen>
     <dimen name="mediumCornerSize">16dp</dimen>
     <dimen name="largeCornerSize">24dp</dimen>
+    <dimen name="strokeWidth">1.5dp</dimen>
 </resources>

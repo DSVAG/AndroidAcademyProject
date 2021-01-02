@@ -14,7 +14,10 @@ import kotlinx.serialization.json.Json
 private val jsonFormat = Json { ignoreUnknownKeys = true }
 
 @Serializable
-private class JsonGenre(val id: Int, val name: String)
+private class JsonGenre(
+    val id: Int,
+    val name: String
+)
 
 @Serializable
 private class JsonActor(
