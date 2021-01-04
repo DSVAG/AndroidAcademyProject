@@ -9,7 +9,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.ActivityMainBinding
 import com.dsvag.androidacademyproject.ui.viewBinding
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)

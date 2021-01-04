@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.adapters
+package com.dsvag.androidacademyproject.ui.fragments.movielist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -38,9 +38,8 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class MovieViewHolder(
-        private val itemBinding: RowMovieBinding
-    ) : RecyclerView.ViewHolder(itemBinding.root) {
+    class MovieViewHolder(private val itemBinding: RowMovieBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(movie: Movie) {
             itemBinding.preview.clipToOutline = true

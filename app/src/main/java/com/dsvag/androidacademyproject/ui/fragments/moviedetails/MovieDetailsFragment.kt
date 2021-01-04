@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.dsvag.androidacademyproject.ui.adapters.ActorAdapter
-import com.dsvag.androidacademyproject.ui.adapters.ItemDecoration
-import com.dsvag.androidacademyproject.models.Movie
 import com.dsvag.androidacademyproject.databinding.FragmentMovieDetailsBinding
+import com.dsvag.androidacademyproject.models.Movie
+import com.dsvag.androidacademyproject.utils.ItemDecoration
 
 class MovieDetailsFragment : Fragment() {
 
@@ -24,6 +23,12 @@ class MovieDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val movie = requireArguments().getParcelable<Movie>("movie")!!
+
         binding.castList.setHasFixedSize(true)
         binding.castList.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -31,18 +36,11 @@ class MovieDetailsFragment : Fragment() {
 
         binding.castList.addItemDecoration(ItemDecoration(8))
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val movie = requireArguments().getParcelable<Movie>("movie")!!
         setData(movie)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 

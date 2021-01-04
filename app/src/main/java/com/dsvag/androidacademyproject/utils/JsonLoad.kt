@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.data.utils
+package com.dsvag.androidacademyproject.utils
 
 import android.content.Context
 import com.dsvag.androidacademyproject.models.Actor

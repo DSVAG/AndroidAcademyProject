@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.adapters
+package com.dsvag.androidacademyproject.utils
 
 import android.graphics.Rect
 import android.view.View

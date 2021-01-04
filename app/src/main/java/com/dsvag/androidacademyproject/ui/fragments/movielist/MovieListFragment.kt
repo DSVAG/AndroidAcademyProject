@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dsvag.androidacademyproject.databinding.FragmentMovieListBinding
 import com.dsvag.androidacademyproject.models.Movie
-import com.dsvag.androidacademyproject.ui.adapters.ItemDecoration
-import com.dsvag.androidacademyproject.ui.adapters.MovieAdapter
-import com.dsvag.androidacademyproject.ui.viewmodels.MoviesViewModel
+import com.dsvag.androidacademyproject.utils.ItemDecoration
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieListFragment : Fragment() {
 
     private var _binding: FragmentMovieListBinding? = null
@@ -21,10 +21,7 @@ class MovieListFragment : Fragment() {
 
     private val movieAdapter by lazy { MovieAdapter() }
 
-    private val moviesViewModel by lazy(LazyThreadSafetyMode.NONE) {
-        ViewModelProvider(this, MoviesViewModel.Factory(requireActivity().application))
-            .get(MoviesViewModel::class.java)
-    }
+    private val moviesViewModel: MoviesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -47,7 +44,7 @@ class MovieListFragment : Fragment() {
 
         binding.moveList.addItemDecoration(ItemDecoration(8))
 
-        moviesViewModel.fetchMovies().observe(viewLifecycleOwner) { movieList: List<Movie>? ->
+        moviesViewModel.movieListData.observe(viewLifecycleOwner) { movieList: List<Movie>? ->
             if (movieList != null) {
                 movieAdapter.setData(movieList)
             }

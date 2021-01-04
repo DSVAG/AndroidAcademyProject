@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.adapters
+package com.dsvag.androidacademyproject.ui.fragments.moviedetails
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dsvag.androidacademyproject.R
-import com.dsvag.androidacademyproject.models.Actor
 import com.dsvag.androidacademyproject.databinding.RowActorBinding
+import com.dsvag.androidacademyproject.models.Actor
 
 class ActorAdapter : RecyclerView.Adapter<ActorAdapter.ActorViewHolder>() {
 
@@ -30,9 +30,8 @@ class ActorAdapter : RecyclerView.Adapter<ActorAdapter.ActorViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class ActorViewHolder(
-        private val itemBinding: RowActorBinding
-    ) : RecyclerView.ViewHolder(itemBinding.root) {
+    class ActorViewHolder(private val itemBinding: RowActorBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(actor: Actor) {
             itemBinding.name.text = actor.name
