@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="?attr/background"
     android:orientation="vertical"
-    tools:context=".ui.fragments.movielist.MovieListFragment">
+    tools:context=".ui.movielist.MovieListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/moveList"

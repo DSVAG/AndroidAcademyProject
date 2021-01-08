@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.fragments.movielist
+package com.dsvag.androidacademyproject.ui.movielist
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData

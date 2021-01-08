@@ -1,15 +1,17 @@
-package com.dsvag.androidacademyproject.ui.fragments.movielist
+package com.dsvag.androidacademyproject.ui.movielist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.RowMovieBinding
 import com.dsvag.androidacademyproject.models.Movie
+import com.dsvag.androidacademyproject.ui.movielist.utils.MovieDiffUtilsCallback
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -33,9 +35,10 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     override fun getItemCount(): Int = movieList.size
 
     fun setData(newData: List<Movie>) {
+        DiffUtil.calculateDiff(MovieDiffUtilsCallback(newData, movieList)).dispatchUpdatesTo(this)
+
         movieList.clear()
         movieList.addAll(newData)
-        notifyDataSetChanged()
     }
 
     class MovieViewHolder(private val itemBinding: RowMovieBinding) :

@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.fragments.moviedetails
+package com.dsvag.androidacademyproject.ui.moviedetails
 
 import android.os.Bundle
 import android.view.LayoutInflater

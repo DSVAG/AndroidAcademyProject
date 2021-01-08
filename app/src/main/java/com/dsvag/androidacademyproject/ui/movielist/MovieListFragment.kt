@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.fragments.movielist
+package com.dsvag.androidacademyproject.ui.movielist
 
 import android.content.res.Configuration
 import android.os.Bundle
