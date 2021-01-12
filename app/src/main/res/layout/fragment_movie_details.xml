@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background"
-    tools:context=".ui.fragments.MovieDetailsFragment">
+    tools:context=".ui.moviedetails.MovieDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,10 +15,10 @@
             android:id="@+id/preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/pic_avengers2" />
+            tools:srcCompat="@tools:sample/avatars" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/previewMask"
@@ -87,12 +87,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:isIndicator="true"
-                    android:max="5"
+                    android:max="10"
                     tools:rating="2.5" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/review"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
                     android:gravity="center_vertical"
@@ -109,7 +109,7 @@
                 android:fontFamily="@font/roboto_medium"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="Storyline"
+                android:text="@string/storyline"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
@@ -132,14 +132,17 @@
                 android:fontFamily="@font/roboto_medium"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="Cast"
+                android:text="@string/cast"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/castList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/row_actor" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,17 @@
-package com.dsvag.androidacademyproject.data.adapters
+package com.dsvag.androidacademyproject.ui.movielist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dsvag.androidacademyproject.R
-import com.dsvag.androidacademyproject.data.models.Movie
 import com.dsvag.androidacademyproject.databinding.RowMovieBinding
+import com.dsvag.androidacademyproject.models.Movie
+import com.dsvag.androidacademyproject.ui.movielist.utils.MovieDiffUtilsCallback
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -32,28 +35,31 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     override fun getItemCount(): Int = movieList.size
 
     fun setData(newData: List<Movie>) {
+        DiffUtil.calculateDiff(MovieDiffUtilsCallback(newData, movieList)).dispatchUpdatesTo(this)
+
         movieList.clear()
         movieList.addAll(newData)
-        notifyDataSetChanged()
     }
 
-    class MovieViewHolder(
-        private val itemBinding: RowMovieBinding
-    ) : RecyclerView.ViewHolder(itemBinding.root) {
+    class MovieViewHolder(private val itemBinding: RowMovieBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(movie: Movie) {
-            itemBinding.name.text = movie.name
-            itemBinding.length.text = movie.length.toString().plus(" minutes")
-            itemBinding.ageLimit.text = movie.ageLimit.toString().plus("+")
-            itemBinding.review.text = movie.reviews.toString().plus(" Reviews")
-            itemBinding.tags.text = movie.tags.joinToString(", ")
-            itemBinding.rating.rating = movie.rating.toFloat()
             itemBinding.preview.clipToOutline = true
+            itemBinding.preview.background =
+                ContextCompat.getDrawable(itemBinding.root.context, R.drawable.bg_movie)
+
+            itemBinding.name.text = movie.title
+            itemBinding.length.text = movie.runtime.toString().plus(" minutes")
+            itemBinding.ageLimit.text = movie.minimumAge.toString().plus("+")
+            itemBinding.tags.text = movie.genres.joinToString(", ") { it.name }
+            itemBinding.review.text = movie.numberOfRatings.toString().plus(" Reviews")
+            itemBinding.rating.rating = movie.ratings / 2
 
             Glide
                 .with(itemBinding.root)
-                .load(movie.preview)
-                .fitCenter()
+                .load(movie.poster)
+                .optionalFitCenter()
                 .into(itemBinding.preview)
         }
     }

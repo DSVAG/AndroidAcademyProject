@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.data.utils
+package com.dsvag.androidacademyproject.ui
 
 import android.app.Activity
 import android.view.LayoutInflater
