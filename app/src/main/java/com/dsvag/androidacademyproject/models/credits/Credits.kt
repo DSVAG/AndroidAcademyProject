@@ -1,6 +1,5 @@
 package com.dsvag.androidacademyproject.models.credits
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

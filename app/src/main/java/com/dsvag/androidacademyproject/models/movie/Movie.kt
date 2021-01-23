@@ -1,6 +1,5 @@
 package com.dsvag.androidacademyproject.models.movie
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -8,7 +7,6 @@ import com.squareup.moshi.JsonClass
 data class Movie(
     @Json(name = "adult")
     val adult: Boolean,
-
 
     @Json(name = "backdrop_path")
     val backdropPath: String?,

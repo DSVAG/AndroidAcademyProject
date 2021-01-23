@@ -10,6 +10,7 @@ import com.dsvag.androidacademyproject.models.movies.Result
 import com.dsvag.androidacademyproject.ui.movies.MoviesViewModel.QueryType.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 class MoviesViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository,
@@ -23,6 +24,7 @@ class MoviesViewModel @ViewModelInject constructor(
 
     private var currentQueryType = TopRated
     private var pageCounter = 1
+    private var maxPageCounter = 1
 
     private var searchQuery: String? = null
 
@@ -32,7 +34,10 @@ class MoviesViewModel @ViewModelInject constructor(
                 pageCounter = 1
                 currentQueryType = NowPlaying
 
-                _mutableResultData.postValue(movieRepository.getNowPlaying(1)?.results)
+                val value = movieRepository.getNowPlaying(1)
+                maxPageCounter = value?.totalPages ?: 1
+
+                _mutableResultData.postValue(value?.results)
             } else {
                 val value =
                     _mutableResultData.value?.plus(movieRepository.getNowPlaying(pageCounter)!!.results)
@@ -48,7 +53,10 @@ class MoviesViewModel @ViewModelInject constructor(
                 pageCounter = 1
                 currentQueryType = Popular
 
-                _mutableResultData.postValue(movieRepository.getPopular(1)?.results)
+                val value = movieRepository.getPopular(1)
+                maxPageCounter = value?.totalPages ?: 1
+
+                _mutableResultData.postValue(value?.results)
             } else {
                 val value =
                     _mutableResultData.value?.plus(movieRepository.getPopular(pageCounter)!!.results)
@@ -64,7 +72,10 @@ class MoviesViewModel @ViewModelInject constructor(
                 pageCounter = 1
                 currentQueryType = TopRated
 
-                _mutableResultData.postValue(movieRepository.getTopRated(1)?.results)
+                val value = movieRepository.getTopRated(1)
+                maxPageCounter = value?.totalPages ?: 1
+
+                _mutableResultData.postValue(value?.results)
             } else {
                 val value =
                     _mutableResultData.value?.plus(movieRepository.getTopRated(pageCounter)!!.results)
@@ -84,7 +95,10 @@ class MoviesViewModel @ViewModelInject constructor(
                     pageCounter = 1
                     currentQueryType = Search
 
-                    _mutableResultData.postValue(movieRepository.search(query!!, 1)?.results)
+                    val value = movieRepository.search(query!!, 1)
+                    maxPageCounter = value?.totalPages ?: 1
+
+                    _mutableResultData.postValue(value?.results)
                 } else {
                     val value =
                         _mutableResultData.value?.plus(
@@ -98,7 +112,7 @@ class MoviesViewModel @ViewModelInject constructor(
     }
 
     fun nextPage() {
-        pageCounter += 1
+        pageCounter = min(pageCounter + 1, maxPageCounter)
 
         when (currentQueryType) {
             NowPlaying -> fetchNowPlaying()
