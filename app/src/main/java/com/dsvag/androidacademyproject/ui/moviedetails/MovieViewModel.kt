@@ -13,18 +13,18 @@ import kotlinx.coroutines.launch
 class MovieViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
-    private val _mutableMovieData: MutableLiveData<Movie> = MutableLiveData()
-    val movieData get() = _mutableMovieData
+    private val _mutableMovie = MutableLiveData<Movie>()
+    val movie get() = _mutableMovie
 
-    private val _mutableCastData: MutableLiveData<List<Cast>> = MutableLiveData()
-    val castData get() = _mutableCastData
+    private val _mutableCast = MutableLiveData<List<Cast>>()
+    val cast get() = _mutableCast
 
     fun fetchMovie(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val response = movieRepository.getMovie(movieId)
 
             if (response.isSuccessful && response.body() != null) {
-                _mutableMovieData.postValue(response.body())
+                _mutableMovie.postValue(response.body())
             }
         }
     }
@@ -34,7 +34,7 @@ class MovieViewModel @ViewModelInject constructor(
             val response = movieRepository.getCredits(movieId)
 
             if (response.isSuccessful && response.body() != null) {
-                _mutableCastData.postValue(response.body()!!.cast)
+                _mutableCast.postValue(response.body()!!.cast)
             }
         }
     }

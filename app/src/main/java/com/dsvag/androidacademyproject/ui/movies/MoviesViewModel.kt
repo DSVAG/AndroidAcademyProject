@@ -17,15 +17,13 @@ class MoviesViewModel @ViewModelInject constructor(
     private val _mutableState = MutableLiveData<State>(State.Default)
     val state get() = _mutableState
 
-    private val _mutableResultData: MutableLiveData<List<Result>> = MutableLiveData()
-    val resultData get() = _mutableResultData
-
+    private val _mutableResult = MutableLiveData<List<Result>>()
+    val result get() = _mutableResult
 
     private var currentQueryType = TopRated
     private var pageCounter = 1
     private var maxPageCounter = 1
     private var searchQuery: String? = null
-
 
     fun fetchNowPlaying() {
         setState(State.Loading)
@@ -39,7 +37,7 @@ class MoviesViewModel @ViewModelInject constructor(
 
                 if (response.isSuccessful && response.body() != null) {
                     maxPageCounter = response.body()!!.totalResults
-                    _mutableResultData.postValue(response.body()!!.results)
+                    _mutableResult.postValue(response.body()!!.results)
 
                     setState(State.Success)
                 } else {
@@ -49,10 +47,10 @@ class MoviesViewModel @ViewModelInject constructor(
                 val response = movieRepository.getNowPlaying(pageCounter)
 
                 if (response.isSuccessful && response.body() != null) {
-                    val value = _mutableResultData.value?.plus(response.body()!!.results)
+                    val value = _mutableResult.value?.plus(response.body()!!.results)
 
                     maxPageCounter = response.body()!!.totalResults
-                    _mutableResultData.postValue(value)
+                    _mutableResult.postValue(value)
                     setState(State.Success)
                 } else {
                     setState(State.Error(response.errorBody().toString()))
@@ -73,7 +71,7 @@ class MoviesViewModel @ViewModelInject constructor(
 
                 if (response.isSuccessful && response.body() != null) {
                     maxPageCounter = response.body()!!.totalResults
-                    _mutableResultData.postValue(response.body()!!.results)
+                    _mutableResult.postValue(response.body()!!.results)
                     setState(State.Success)
                 } else {
                     setState(State.Error(response.errorBody().toString()))
@@ -83,10 +81,10 @@ class MoviesViewModel @ViewModelInject constructor(
                 val response = movieRepository.getPopular(pageCounter)
 
                 if (response.isSuccessful && response.body() != null) {
-                    val value = _mutableResultData.value?.plus(response.body()!!.results)
+                    val value = _mutableResult.value?.plus(response.body()!!.results)
 
                     maxPageCounter = response.body()!!.totalResults
-                    _mutableResultData.postValue(value)
+                    _mutableResult.postValue(value)
                     setState(State.Success)
                 } else {
                     setState(State.Error(response.errorBody().toString()))
@@ -107,7 +105,7 @@ class MoviesViewModel @ViewModelInject constructor(
 
                 if (response.isSuccessful && response.body() != null) {
                     maxPageCounter = response.body()!!.totalResults
-                    _mutableResultData.postValue(response.body()!!.results)
+                    _mutableResult.postValue(response.body()!!.results)
                     setState(State.Success)
                 } else {
                     setState(State.Error(response.errorBody().toString()))
@@ -117,10 +115,10 @@ class MoviesViewModel @ViewModelInject constructor(
                 val response = movieRepository.getTopRated(pageCounter)
 
                 if (response.isSuccessful && response.body() != null) {
-                    val value = _mutableResultData.value?.plus(response.body()!!.results)
+                    val value = _mutableResult.value?.plus(response.body()!!.results)
 
                     maxPageCounter = response.body()!!.totalResults
-                    _mutableResultData.postValue(value)
+                    _mutableResult.postValue(value)
                     setState(State.Success)
                 } else {
                     setState(State.Error(response.errorBody().toString()))
@@ -144,7 +142,7 @@ class MoviesViewModel @ViewModelInject constructor(
                     if (response.isSuccessful && response.body() != null) {
 
                         maxPageCounter = response.body()!!.totalResults
-                        _mutableResultData.postValue(response.body()!!.results)
+                        _mutableResult.postValue(response.body()!!.results)
                         setState(State.Success)
                     } else {
                         setState(State.Error(response.errorBody().toString()))
@@ -153,10 +151,10 @@ class MoviesViewModel @ViewModelInject constructor(
                     val response = movieRepository.search(query!!, pageCounter)
 
                     if (response.isSuccessful && response.body() != null) {
-                        val value = _mutableResultData.value?.plus(response.body()!!.results)
+                        val value = _mutableResult.value?.plus(response.body()!!.results)
 
                         maxPageCounter = response.body()!!.totalResults
-                        _mutableResultData.postValue(value)
+                        _mutableResult.postValue(value)
                         setState(State.Success)
                     } else {
                         setState(State.Error(response.errorBody().toString()))

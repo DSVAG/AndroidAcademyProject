@@ -43,7 +43,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
         })
 
-        moviesViewModel.resultData.observe(viewLifecycleOwner) { movieList ->
+        moviesViewModel.result.observe(viewLifecycleOwner) { movieList ->
             movieList?.let { movieAdapter.setData(it) }
         }
 

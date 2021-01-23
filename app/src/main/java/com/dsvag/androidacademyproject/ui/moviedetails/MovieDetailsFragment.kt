@@ -26,11 +26,11 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         binding.castList.addItemDecoration(ItemDecoration(16f))
         binding.castList.adapter = castAdapter
 
-        movieViewModel.movieData.observe(viewLifecycleOwner) { movie ->
+        movieViewModel.movie.observe(viewLifecycleOwner) { movie ->
             movie?.let { setMovieData(it) }
         }
 
-        movieViewModel.castData.observe(viewLifecycleOwner) { cast ->
+        movieViewModel.cast.observe(viewLifecycleOwner) { cast ->
             cast?.let { castAdapter.setData(it) }
         }
 
