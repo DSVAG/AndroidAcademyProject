@@ -79,7 +79,7 @@ class CreditFragment : Fragment() {
         }
 
         binding.name.text = person.name
-        binding.dateOfBirth.text = person.birthday.split('-').asReversed().joinToString(".")
+        binding.dateOfBirth.text = person.birthday?.split('-')?.asReversed()?.joinToString(".")
         binding.placeOfBirth.text = person.placeOfBirth
         binding.knownForDepartment.text = person.knownForDepartment
         binding.biography.text = person.biography
