@@ -2,17 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="128dp"
+    android:layout_width="144dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:background="@color/black">
+    android:background="@drawable/bg_movie"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/photo"
+        android:id="@+id/poster"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/strokeWidth"
         android:background="@drawable/bg_actor_photo"
-        app:layout_constraintDimensionRatio="421:632"
+        app:layout_constraintDimensionRatio="780:1170"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,13 +24,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:paddingHorizontal="4dp"
-        android:paddingVertical="2dp"
+        android:padding="8dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/photo"
-        app:layout_constraintStart_toStartOf="@id/photo"
-        app:layout_constraintTop_toBottomOf="@id/photo"
+        app:layout_constraintEnd_toEndOf="@id/poster"
+        app:layout_constraintStart_toStartOf="@id/poster"
+        app:layout_constraintTop_toBottomOf="@id/poster"
         tools:text="@tools:sample/full_names" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

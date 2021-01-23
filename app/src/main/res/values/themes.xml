@@ -20,8 +20,8 @@
 
         <item name="colorItemBorder">@color/grey</item>
 
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/background</item>
+        <item name="android:navigationBarColor">?attr/background</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
@@ -36,7 +36,7 @@
     </style>
 
     <style name="Theme.Toolbar.Text" parent="Theme.MaterialComponents">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="Theme.RatingBar" parent="Widget.AppCompat.RatingBar.Small">
@@ -49,5 +49,11 @@
         <item name="buttonTint">@color/checkbox</item>
     </style>
 
+    <style name="Theme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="itemIconTint">@color/red</item>
+        <item name="backgroundTint">?attr/background</item>
+        <item name="titleTextColor">@color/grey</item>
+        <item name="labelVisibilityMode">selected</item>
+    </style>
 
 </resources>
