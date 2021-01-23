@@ -1,40 +1,28 @@
 package com.dsvag.androidacademyproject.ui.movies
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentMoviesBinding
+import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MoviesFragment : Fragment() {
+class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
-    private var _binding: FragmentMoviesBinding? = null
-    private val binding get() = _binding!!
+    private val binding by viewBinding(FragmentMoviesBinding::bind)
 
     private val moviesViewModel: MoviesViewModel by viewModels()
 
     private val movieAdapter by lazy { MovieAdapter() }
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
-
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Now Playing"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Popular"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Top Rated"))
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.movieList.adapter = movieAdapter
@@ -55,11 +43,8 @@ class MoviesFragment : Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
         })
 
-
         moviesViewModel.resultData.observe(viewLifecycleOwner) { movieList ->
-            movieList?.let {
-                movieAdapter.setData(it)
-            }
+            movieList?.let { movieAdapter.setData(it) }
         }
 
         binding.movieList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -72,10 +57,23 @@ class MoviesFragment : Fragment() {
                 }
             }
         })
+
+        moviesViewModel.state.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                MoviesViewModel.State.Default -> moviesViewModel.fetchNowPlaying()
+                MoviesViewModel.State.Loading -> setLoading(true)
+                is MoviesViewModel.State.Error -> showError(state.msg)
+                MoviesViewModel.State.Success -> setLoading(false)
+            }
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setLoading(visibility: Boolean) {
+        binding.loadingIndicator.isVisible = visibility
+    }
+
+    private fun showError(msg: String) {
+        setLoading(false)
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 }

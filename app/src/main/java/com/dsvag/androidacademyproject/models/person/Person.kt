@@ -14,7 +14,7 @@ data class Person(
     @Json(name = "birthday")
     val birthday: String?,
     @Json(name = "deathday")
-    val deathday: String?,
+    val deathDay: String?,
     @Json(name = "gender")
     val gender: Int,
     @Json(name = "homepage")

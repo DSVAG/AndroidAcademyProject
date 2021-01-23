@@ -13,6 +13,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -47,6 +48,7 @@ object AppModule {
     fun provideOkHttpClient(requestInterceptor: Interceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(requestInterceptor)
+            .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
 

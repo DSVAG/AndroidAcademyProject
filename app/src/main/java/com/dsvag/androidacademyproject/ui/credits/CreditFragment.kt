@@ -1,9 +1,7 @@
 package com.dsvag.androidacademyproject.ui.credits
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,25 +11,17 @@ import coil.transform.RoundedCornersTransformation
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentCreditBinding
 import com.dsvag.androidacademyproject.models.person.Person
+import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreditFragment : Fragment() {
-    private var _binding: FragmentCreditBinding? = null
-    private val binding get() = _binding!!
+class CreditFragment : Fragment(R.layout.fragment_credit) {
+    private val binding by viewBinding(FragmentCreditBinding::bind)
 
     private val personViewModel: PersonViewModel by viewModels()
 
     private val castAdapter by lazy { MoviesAdapter() }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCreditBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.filmList.addItemDecoration(ItemDecoration(16f))
@@ -48,11 +38,6 @@ class CreditFragment : Fragment() {
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onStart() {

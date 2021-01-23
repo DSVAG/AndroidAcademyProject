@@ -1,27 +1,11 @@
 package com.dsvag.androidacademyproject.ui.cinemas
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentCinemasBinding
+import com.dsvag.androidacademyproject.ui.viewBinding
 
-class CinemasFragment : Fragment() {
+class CinemasFragment : Fragment(R.layout.fragment_cinemas) {
 
-    private var _binding: FragmentCinemasBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCinemasBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    private val binding by viewBinding(FragmentCinemasBinding::bind)
 }

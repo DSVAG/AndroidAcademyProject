@@ -1,6 +1,5 @@
 package com.dsvag.androidacademyproject.ui.movies
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,79 +14,124 @@ import kotlin.math.min
 class MoviesViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
+    private val _mutableState = MutableLiveData<State>(State.Default)
+    val state get() = _mutableState
+
     private val _mutableResultData: MutableLiveData<List<Result>> = MutableLiveData()
     val resultData get() = _mutableResultData
 
-    init {
-        fetchNowPlaying()
-    }
 
     private var currentQueryType = TopRated
     private var pageCounter = 1
     private var maxPageCounter = 1
-
     private var searchQuery: String? = null
 
+
     fun fetchNowPlaying() {
+        setState(State.Loading)
+
         viewModelScope.launch(Dispatchers.IO) {
             if (currentQueryType != NowPlaying) {
                 pageCounter = 1
                 currentQueryType = NowPlaying
 
-                val value = movieRepository.getNowPlaying(1)
-                maxPageCounter = value?.totalPages ?: 1
+                val response = movieRepository.getNowPlaying(pageCounter)
 
-                _mutableResultData.postValue(value?.results)
+                if (response.isSuccessful && response.body() != null) {
+                    maxPageCounter = response.body()!!.totalResults
+                    _mutableResultData.postValue(response.body()!!.results)
+
+                    setState(State.Success)
+                } else {
+                    setState(State.Error(response.errorBody().toString()))
+                }
             } else {
-                val value =
-                    _mutableResultData.value?.plus(movieRepository.getNowPlaying(pageCounter)!!.results)
+                val response = movieRepository.getNowPlaying(pageCounter)
 
-                _mutableResultData.postValue(value)
+                if (response.isSuccessful && response.body() != null) {
+                    val value = _mutableResultData.value?.plus(response.body()!!.results)
+
+                    maxPageCounter = response.body()!!.totalResults
+                    _mutableResultData.postValue(value)
+                    setState(State.Success)
+                } else {
+                    setState(State.Error(response.errorBody().toString()))
+                }
             }
         }
     }
 
     fun fetchPopular() {
+        setState(State.Loading)
+
         viewModelScope.launch(Dispatchers.IO) {
             if (currentQueryType != Popular) {
                 pageCounter = 1
                 currentQueryType = Popular
 
-                val value = movieRepository.getPopular(1)
-                maxPageCounter = value?.totalPages ?: 1
+                val response = movieRepository.getPopular(pageCounter)
 
-                _mutableResultData.postValue(value?.results)
+                if (response.isSuccessful && response.body() != null) {
+                    maxPageCounter = response.body()!!.totalResults
+                    _mutableResultData.postValue(response.body()!!.results)
+                    setState(State.Success)
+                } else {
+                    setState(State.Error(response.errorBody().toString()))
+                }
+
             } else {
-                val value =
-                    _mutableResultData.value?.plus(movieRepository.getPopular(pageCounter)!!.results)
+                val response = movieRepository.getPopular(pageCounter)
 
-                _mutableResultData.postValue(value)
+                if (response.isSuccessful && response.body() != null) {
+                    val value = _mutableResultData.value?.plus(response.body()!!.results)
+
+                    maxPageCounter = response.body()!!.totalResults
+                    _mutableResultData.postValue(value)
+                    setState(State.Success)
+                } else {
+                    setState(State.Error(response.errorBody().toString()))
+                }
             }
         }
     }
 
     fun fetchTopRated() {
+        setState(State.Loading)
+
         viewModelScope.launch(Dispatchers.IO) {
             if (currentQueryType != TopRated) {
                 pageCounter = 1
                 currentQueryType = TopRated
 
-                val value = movieRepository.getTopRated(1)
-                maxPageCounter = value?.totalPages ?: 1
+                val response = movieRepository.getTopRated(pageCounter)
 
-                _mutableResultData.postValue(value?.results)
+                if (response.isSuccessful && response.body() != null) {
+                    maxPageCounter = response.body()!!.totalResults
+                    _mutableResultData.postValue(response.body()!!.results)
+                    setState(State.Success)
+                } else {
+                    setState(State.Error(response.errorBody().toString()))
+                }
+
             } else {
-                val value =
-                    _mutableResultData.value?.plus(movieRepository.getTopRated(pageCounter)!!.results)
+                val response = movieRepository.getTopRated(pageCounter)
 
-                _mutableResultData.postValue(value)
+                if (response.isSuccessful && response.body() != null) {
+                    val value = _mutableResultData.value?.plus(response.body()!!.results)
+
+                    maxPageCounter = response.body()!!.totalResults
+                    _mutableResultData.postValue(value)
+                    setState(State.Success)
+                } else {
+                    setState(State.Error(response.errorBody().toString()))
+                }
             }
         }
     }
 
     fun search(query: String?) {
         searchQuery = query
-        Log.d("kek", "search")
+        setState(State.Loading)
 
         viewModelScope.launch(Dispatchers.IO) {
             if (searchQuery != null) {
@@ -95,17 +139,28 @@ class MoviesViewModel @ViewModelInject constructor(
                     pageCounter = 1
                     currentQueryType = Search
 
-                    val value = movieRepository.search(query!!, 1)
-                    maxPageCounter = value?.totalPages ?: 1
+                    val response = movieRepository.search(query!!, pageCounter)
 
-                    _mutableResultData.postValue(value?.results)
+                    if (response.isSuccessful && response.body() != null) {
+
+                        maxPageCounter = response.body()!!.totalResults
+                        _mutableResultData.postValue(response.body()!!.results)
+                        setState(State.Success)
+                    } else {
+                        setState(State.Error(response.errorBody().toString()))
+                    }
                 } else {
-                    val value =
-                        _mutableResultData.value?.plus(
-                            movieRepository.search(query!!, pageCounter)!!.results
-                        )
+                    val response = movieRepository.search(query!!, pageCounter)
 
-                    _mutableResultData.postValue(value)
+                    if (response.isSuccessful && response.body() != null) {
+                        val value = _mutableResultData.value?.plus(response.body()!!.results)
+
+                        maxPageCounter = response.body()!!.totalResults
+                        _mutableResultData.postValue(value)
+                        setState(State.Success)
+                    } else {
+                        setState(State.Error(response.errorBody().toString()))
+                    }
                 }
             }
         }
@@ -120,6 +175,20 @@ class MoviesViewModel @ViewModelInject constructor(
             TopRated -> fetchTopRated()
             Search -> search(searchQuery)
         }
+    }
+
+    private fun setState(state: State) {
+        viewModelScope.launch(Dispatchers.Main.immediate) {
+            _mutableState.value = state
+        }
+    }
+
+    sealed class State {
+        object Default : State()
+        object Loading : State()
+        object Success : State()
+
+        data class Error(val msg: String) : State()
     }
 
     private enum class QueryType {

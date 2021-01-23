@@ -45,15 +45,23 @@
         <item name="android:progressTint">@color/red</item>
     </style>
 
-    <style name="Theme.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
-        <item name="buttonTint">@color/checkbox</item>
-    </style>
-
     <style name="Theme.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
         <item name="itemIconTint">@color/red</item>
         <item name="backgroundTint">?attr/background</item>
         <item name="titleTextColor">@color/grey</item>
         <item name="labelVisibilityMode">selected</item>
+    </style>
+
+    <style name="Theme.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabBackground">?attr/background</item>
+        <item name="android:textAlignment">center</item>
+        <item name="tabTextAppearance">@style/Theme.TabLayout.Text</item>
+    </style>
+
+    <style name="Theme.TabLayout.Text" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>

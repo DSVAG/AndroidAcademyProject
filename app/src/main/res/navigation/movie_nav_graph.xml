@@ -21,7 +21,7 @@
         android:id="@+id/ticketsFragment"
         android:name="com.dsvag.androidacademyproject.ui.tickets.TicketsFragment"
         android:label="fragment_ticketsragment"
-        tools:layout="@layout/fragment_ticketsragment" />
+        tools:layout="@layout/fragment_tickets" />
 
     <fragment
         android:id="@+id/cinemasFragment"
