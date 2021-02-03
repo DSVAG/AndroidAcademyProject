@@ -23,6 +23,12 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
 
     override fun onBindViewHolder(holder: CastViewHolder, position: Int) {
         holder.bind(castList[position])
+
+        holder.itemView.setOnClickListener {
+            val bundle = Bundle().apply { putInt("castId", castList[position].id) }
+            holder.itemView.findNavController()
+                .navigate(R.id.action_movieDetailsFragment_to_creditFragment, bundle)
+        }
     }
 
     override fun getItemCount(): Int = castList.size
@@ -51,12 +57,6 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
             itemBinding.photo.load(url) {
                 crossfade(true)
                 error(R.drawable.ic_launcher_foreground)
-            }
-
-            itemBinding.root.setOnClickListener {
-                val bundle = Bundle().apply { putInt("castId", cast.id) }
-                itemBinding.root.findNavController()
-                    .navigate(R.id.action_movieDetailsFragment_to_creditFragment, bundle)
             }
         }
     }

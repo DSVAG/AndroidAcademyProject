@@ -20,11 +20,23 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return MovieViewHolder(RowMovieBinding.inflate(inflater, parent, false))
+        val binding = RowMovieBinding.inflate(inflater, parent, false)
+
+        binding.root.setOnClickListener {
+
+        }
+
+        return MovieViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(resultList[position])
+
+        holder.itemView.setOnClickListener {
+            val bundle = Bundle().apply { putInt("movieId", resultList[position].id) }
+            holder.itemView.findNavController()
+                .navigate(R.id.action_moviesFragment_to_movieDetailsFragment, bundle)
+        }
     }
 
     override fun getItemCount(): Int = resultList.size
@@ -55,12 +67,6 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             itemBinding.preview.load(url) {
                 crossfade(true)
                 error(R.drawable.ic_launcher_foreground)
-            }
-
-            itemBinding.root.setOnClickListener {
-                val bundle = Bundle().apply { putInt("movieId", result.id) }
-                itemBinding.root.findNavController()
-                    .navigate(R.id.action_moviesFragment_to_movieDetailsFragment, bundle)
             }
         }
     }
