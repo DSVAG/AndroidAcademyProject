@@ -21,13 +21,21 @@ class PersonViewModel @ViewModelInject constructor(
 
     fun fetchPerson(personId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _mutablePersonData.postValue(personRepository.getPerson(personId))
+            val response = runCatching { personRepository.getPerson(personId) }.getOrNull()
+
+            if (response != null && response.isSuccessful && response.body() != null) {
+                _mutablePersonData.postValue(response.body())
+            }
         }
     }
 
     fun fetchPersonMovie(personId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _mutablePersonMovieData.postValue(personRepository.getPersonMovies(personId)?.cast)
+            val response = runCatching { personRepository.getPersonMovies(personId) }.getOrNull()
+
+            if (response != null && response.isSuccessful && response.body() != null) {
+                _mutablePersonMovieData.postValue(response.body()!!.cast)
+            }
         }
     }
 }
