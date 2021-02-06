@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.credits
+package com.dsvag.androidacademyproject.ui.person
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -51,7 +51,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
             itemBinding.root.setOnClickListener {
                 val bundle = Bundle().apply { putInt("movieId", cast.id) }
                 itemBinding.root.findNavController()
-                    .navigate(R.id.action_creditFragment_to_movieDetailsFragment, bundle)
+                    .navigate(R.id.action_personFragment_to_movieDetailsFragment, bundle)
             }
         }
     }

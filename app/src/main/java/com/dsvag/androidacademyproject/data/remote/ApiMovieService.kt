@@ -38,11 +38,4 @@ interface ApiMovieService {
         @Path("id") id: Int,
         @Query("api_key") api_key: String,
     ): Response<Credits>
-
-    @GET("search/movie")
-    suspend fun search(
-        @Query("api_key") api_key: String,
-        @Query("query") query: String,
-        @Query("page") page: Int,
-    ): Response<Request>
 }

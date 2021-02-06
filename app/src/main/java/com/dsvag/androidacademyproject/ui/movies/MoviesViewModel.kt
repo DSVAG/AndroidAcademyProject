@@ -25,7 +25,6 @@ class MoviesViewModel @ViewModelInject constructor(
     private var currentQueryType = TopRated
     private var pageCounter = 1
     private var maxPageCounter = 1
-    private var searchQuery: String? = null
 
     fun fetchNowPlaying() {
         setState(State.Loading)
@@ -66,43 +65,6 @@ class MoviesViewModel @ViewModelInject constructor(
         }
     }
 
-    fun search(query: String?) {
-        searchQuery = query
-        setState(State.Loading)
-
-//        viewModelScope.launch(Dispatchers.IO) {
-//            if (searchQuery != null) {
-//                if (currentQueryType != Search) {
-//                    pageCounter = 1
-//                    currentQueryType = Search
-//
-//                    val response = movieRepository.search(query!!, pageCounter)
-//
-//                    if (response.isSuccessful && response.body() != null) {
-//
-//                        maxPageCounter = response.body()!!.totalResults
-//                        _mutableMovies.postValue(response.body()!!.movies.toMutableList())
-//                        setState(State.Success)
-//                    } else {
-//                        setState(State.Error(response.errorBody().toString()))
-//                    }
-//                } else {
-//                    val response = movieRepository.search(query!!, pageCounter)
-//
-//                    if (response.isSuccessful && response.body() != null) {
-//                        val value = _mutableMovies.value?.plus(response.body()!!.movies)
-//
-//                        maxPageCounter = response.body()!!.totalResults
-//                        _mutableMovies.postValue(value?.toMutableList())
-//                        setState(State.Success)
-//                    } else {
-//                        setState(State.Error(response.errorBody().toString()))
-//                    }
-//                }
-//            }
-//        }
-    }
-
     fun nextPage() {
         if (pageCounter < maxPageCounter) {
             setState(State.Loading)
@@ -114,7 +76,6 @@ class MoviesViewModel @ViewModelInject constructor(
                     Now -> fetchNextPage(runCatching { movieRepository.getNowPlaying(pageCounter) }.getOrNull())
                     Popular -> fetchNextPage(runCatching { movieRepository.getPopular(pageCounter) }.getOrNull())
                     TopRated -> fetchNextPage(runCatching { movieRepository.getTopRated(pageCounter) }.getOrNull())
-                    Search -> search(searchQuery)
                 }
             }
         }
@@ -159,6 +120,6 @@ class MoviesViewModel @ViewModelInject constructor(
     }
 
     private enum class QueryType {
-        Now, Popular, TopRated, Search
+        Now, Popular, TopRated
     }
 }

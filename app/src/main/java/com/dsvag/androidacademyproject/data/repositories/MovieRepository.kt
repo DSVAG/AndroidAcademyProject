@@ -1,6 +1,7 @@
 package com.dsvag.androidacademyproject.data.repositories
 
 import com.dsvag.androidacademyproject.BuildConfig
+import com.dsvag.androidacademyproject.data.local.MovieDao
 import com.dsvag.androidacademyproject.data.remote.ApiMovieService
 import com.dsvag.androidacademyproject.models.credits.Credits
 import com.dsvag.androidacademyproject.models.movies.Movie
@@ -9,7 +10,8 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
-    private val apiMovieService: ApiMovieService
+    private val apiMovieService: ApiMovieService,
+    private val movieDao: MovieDao,
 ) {
     suspend fun getNowPlaying(page: Int): Response<Request> {
         return apiMovieService.getNowPlaying(API_KEY, page)
@@ -27,12 +29,8 @@ class MovieRepository @Inject constructor(
         return apiMovieService.getMovie(movieId, API_KEY)
     }
 
-    suspend fun getCredits(movieId: Int): Response<Credits> {
+    suspend fun getMovieCredits(movieId: Int): Response<Credits> {
         return apiMovieService.getCredits(movieId, API_KEY)
-    }
-
-    suspend fun search(query: String, page: Int): Response<Request> {
-        return apiMovieService.search(API_KEY, query, page)
     }
 
     companion object {

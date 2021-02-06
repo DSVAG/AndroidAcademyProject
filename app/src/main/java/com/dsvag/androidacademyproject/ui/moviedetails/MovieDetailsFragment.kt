@@ -56,7 +56,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
 
         binding.title.text = movie.title
-        binding.genres.text = movie.genre?.joinToString(", ") { it.name }
+        binding.genres.text = movie.genres?.joinToString(", ") { it.name }
         binding.rating.rating = movie.voteAverage.toFloat() / 2
         binding.review.text = movie.voteCount.toString().plus(" Reviews")
         binding.storyline.text = movie.overview

@@ -7,7 +7,7 @@
     android:scrollbars="none"
     android:background="?attr/background"
     android:overScrollMode="never"
-    tools:context=".ui.credits.CreditFragment">
+    tools:context=".ui.person.PersonFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

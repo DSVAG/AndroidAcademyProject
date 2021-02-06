@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.credits
+package com.dsvag.androidacademyproject.ui.person
 
 import android.os.Bundle
 import android.view.View
@@ -9,15 +9,15 @@ import coil.load
 import coil.transform.BlurTransformation
 import coil.transform.RoundedCornersTransformation
 import com.dsvag.androidacademyproject.R
-import com.dsvag.androidacademyproject.databinding.FragmentCreditBinding
+import com.dsvag.androidacademyproject.databinding.FragmentPersonBinding
 import com.dsvag.androidacademyproject.models.person.Person
 import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreditFragment : Fragment(R.layout.fragment_credit) {
-    private val binding by viewBinding(FragmentCreditBinding::bind)
+class PersonFragment : Fragment(R.layout.fragment_person) {
+    private val binding by viewBinding(FragmentPersonBinding::bind)
 
     private val personViewModel: PersonViewModel by viewModels()
 

@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.credits
+package com.dsvag.androidacademyproject.ui.person
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class PersonViewModel @ViewModelInject constructor(
     private val personRepository: PersonRepository,
 ) : ViewModel() {
-    private val _mutablePersonData: MutableLiveData<Person> = MutableLiveData()
+    private var _mutablePersonData: MutableLiveData<Person> = MutableLiveData()
     val personData get() = _mutablePersonData
 
     private val _mutablePersonMovieData: MutableLiveData<List<Cast>> = MutableLiveData()
