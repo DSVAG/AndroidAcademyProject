@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:background="?attr/background"
+    android:overScrollMode="never"
+    tools:context=".ui.credits.CreditFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:foreground="@color/transparent50"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="2:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/example_movie_preview" />
+
+        <com.google.android.material.internal.BaselineLayout
+            android:id="@+id/margin"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_back"
+            android:drawableTint="@color/white"
+            android:elevation="8dp"
+            android:gravity="center"
+            android:text="Back"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/margin"
+            app:layout_constraintTop_toTopOf="@+id/margin" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@+id/photo"
+            app:layout_constraintEnd_toEndOf="@+id/margin"
+            app:layout_constraintStart_toStartOf="@+id/margin"
+            tools:text="@tools:sample/full_names" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/photo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_actor_photo"
+            app:layout_constraintBottom_toBottomOf="@id/backdrop"
+            app:layout_constraintDimensionRatio="421:632"
+            app:layout_constraintStart_toStartOf="@id/margin"
+            app:layout_constraintTop_toBottomOf="@id/backdrop"
+            app:layout_constraintWidth_percent="0.25"
+            tools:srcCompat="@drawable/example_movie_preview" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/dateOfBirth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingVertical="4dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/placeOfBirth"
+            app:layout_constraintEnd_toEndOf="@+id/margin"
+            app:layout_constraintStart_toEndOf="@+id/photo"
+            tools:text="@tools:sample/full_names" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/placeOfBirth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingVertical="4dp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/knownForDepartment"
+            app:layout_constraintEnd_toEndOf="@+id/margin"
+            app:layout_constraintStart_toEndOf="@+id/photo"
+            tools:text="@tools:sample/full_names" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/knownForDepartment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingVertical="4dp"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/filmography"
+            app:layout_constraintEnd_toEndOf="@+id/margin"
+            app:layout_constraintStart_toEndOf="@+id/photo"
+            tools:text="@tools:sample/full_names" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filmography"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingVertical="8dp"
+            android:text="Filmography"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/margin"
+            app:layout_constraintStart_toStartOf="@id/margin"
+            app:layout_constraintTop_toBottomOf="@+id/photo" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filmList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:paddingHorizontal="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/filmography"
+            tools:itemCount="5"
+            tools:listitem="@layout/row_movie_small" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/biographyTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:text="Biomography"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/margin"
+            app:layout_constraintStart_toStartOf="@id/margin"
+            app:layout_constraintTop_toBottomOf="@+id/filmList" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/biography"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/margin"
+            app:layout_constraintStart_toStartOf="@id/margin"
+            app:layout_constraintTop_toBottomOf="@+id/biographyTitle"
+            tools:text="Robert Downey Jr. has evolved into one of the most respected actors in Hollywood. With an amazing list of credits to his name, he has managed to stay new and fresh even after over four decades in the business.Downey was born April 4, 1965 in Manhattan, New York, the son of writer, director and filmographer Robert Downey Sr. and actress Elsie Downey (née Elsie Ann Ford). Robert's father is of half Lithuanian Jewish, one quarter Hungarian Jewish, and one quarter Irish, descent, while Robert's mother was of English, Scottish, German, and Swiss-German ancestry. Robert and his sister, Allyson Downey, were immersed in film and the performing arts from a very young age, leading Downey Jr. to study at the Stagedoor Manor Performing Arts Training Center in upstate New York, before moving to California with his father following his parents' 1978 divorce. In 1982, he dropped out of Santa Monica High School to pursue acting full time. Downey Sr., himself a drug addict, exposed his son to drugs at a very early age, and Downey Jr. would go on to struggle with abuse for decades." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

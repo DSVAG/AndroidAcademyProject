@@ -9,25 +9,17 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/preview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_margin="@dimen/strokeWidth"
+        android:foreground="@drawable/fg_mask"
+        app:layout_constraintDimensionRatio="780:1170"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/previewMask"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_mask"
-        app:layout_constraintBottom_toBottomOf="@+id/preview"
-        app:layout_constraintEnd_toEndOf="@+id/preview"
-        app:layout_constraintStart_toStartOf="@+id/preview"
-        app:layout_constraintTop_toTopOf="@+id/preview" />
+        tools:srcCompat="@drawable/example_movie_preview" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/ageLimit"
+        android:id="@+id/adult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -35,22 +27,10 @@
         android:fontFamily="@font/roboto_medium"
         android:gravity="center_vertical"
         android:padding="4dp"
+        android:text="Adult"
         android:textColor="@color/not_white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/preview"
-        app:layout_constraintTop_toTopOf="@+id/preview"
-        tools:text="13+" />
-
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/favorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:button="@drawable/ic_baseline_favorite"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
-        android:theme="@style/Theme.CheckBox"
-        app:layout_constraintEnd_toEndOf="@+id/preview"
         app:layout_constraintTop_toTopOf="@+id/preview" />
 
     <androidx.appcompat.widget.AppCompatRatingBar
@@ -76,7 +56,7 @@
         android:paddingVertical="4dp"
         android:textColor="@color/red"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/rating"
+        app:layout_constraintBottom_toTopOf="@+id/review"
         app:layout_constraintStart_toStartOf="@+id/rating"
         tools:text="Action" />
 
@@ -96,39 +76,21 @@
         app:layout_constraintStart_toEndOf="@+id/rating"
         tools:text="100 Reviews" />
 
-    <LinearLayout
-        android:id="@+id/kek"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="start"
         android:paddingHorizontal="8dp"
         android:paddingVertical="4dp"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preview">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:gravity="start"
-            android:paddingVertical="4dp"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp"
-            tools:text="Avengers: End Game" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/length"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:gravity="center_vertical"
-            android:paddingVertical="4dp"
-            android:textColor="@color/grey"
-            android:textSize="12sp"
-            tools:text="137 min" />
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/preview"
+        tools:text="Avengers: End Game" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

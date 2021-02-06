@@ -21,5 +21,6 @@
 
     <color name="transparent">#00000000</color>
     <color name="transparent10">#0AA0A0A0</color>
-    <color name="transparent25">#C0000000</color>
+    <color name="transparent25">#C0FF3466</color>
+    <color name="transparent50">#80000000</color>
 </resources>

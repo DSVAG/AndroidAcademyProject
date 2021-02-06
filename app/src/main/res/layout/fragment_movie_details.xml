@@ -1,150 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/background"
+    android:overScrollMode="never"
+    android:scrollbars="none"
     tools:context=".ui.moviedetails.MovieDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/preview"
+            android:id="@+id/backdrop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:foreground="@color/transparent50"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="2:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/example_movie_preview" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/previewMask"
+        <com.google.android.material.internal.BaselineLayout
+            android:id="@+id/margin"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/bg_mask"
-            app:layout_constraintBottom_toBottomOf="@+id/preview"
-            app:layout_constraintEnd_toEndOf="@+id/preview"
-            app:layout_constraintStart_toStartOf="@+id/preview"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/ageLimit"
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:fontFamily="@font/roboto_medium"
+            android:drawableStart="@drawable/ic_back"
+            android:drawableTint="@color/white"
+            android:elevation="8dp"
+            android:gravity="center"
+            android:text="Back"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/name"
-            app:layout_constraintStart_toStartOf="@+id/preview"
-            tools:text="13+" />
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/margin"
+            app:layout_constraintTop_toTopOf="@+id/margin" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/backdrop"
+            app:layout_constraintEnd_toEndOf="@id/margin"
+            app:layout_constraintStart_toStartOf="@id/margin"
+            app:layout_constraintTop_toBottomOf="@id/backdrop"
+            tools:text="@tools:sample/full_names" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/genres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:textColor="@color/red"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/margin"
+            app:layout_constraintStart_toStartOf="@id/margin"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="@tools:sample/full_names" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/rating"
+            style="@style/Theme.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/review"
+            app:layout_constraintStart_toStartOf="@+id/margin"
+            app:layout_constraintTop_toTopOf="@+id/review"
+            tools:rating="2.5" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/review"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_medium"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/margin"
+            app:layout_constraintStart_toEndOf="@+id/rating"
+            app:layout_constraintTop_toBottomOf="@+id/genres"
+            tools:text="100 Reviews" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/storylineTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:text="Storyline"
             android:textColor="@color/white"
-            android:textSize="32sp"
-            app:layout_constraintBottom_toBottomOf="@+id/preview"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/margin"
+            app:layout_constraintStart_toStartOf="@id/margin"
+            app:layout_constraintTop_toBottomOf="@+id/review" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/storyline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/margin"
+            app:layout_constraintStart_toStartOf="@id/margin"
+            app:layout_constraintTop_toBottomOf="@+id/storylineTitle" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/castTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:text="Cast"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/margin"
+            app:layout_constraintStart_toStartOf="@id/margin"
+            app:layout_constraintTop_toBottomOf="@+id/storyline" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/castList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:paddingHorizontal="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Avengers: End Game" />
+            app:layout_constraintTop_toBottomOf="@+id/castTitle"
+            tools:listitem="@layout/row_actor" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/preview">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tags"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/red"
-                android:textSize="18sp"
-                tools:text="Action" />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp">
-
-                <androidx.appcompat.widget.AppCompatRatingBar
-                    android:id="@+id/rating"
-                    style="@style/Theme.RatingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:isIndicator="true"
-                    android:max="10"
-                    tools:rating="2.5" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/review"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_medium"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/grey"
-                    android:textSize="18sp"
-                    tools:text="100 Reviews" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/storylineLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:text="@string/storyline"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/storyline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                tools:text="@string/story_line_avengers" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/castLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto_medium"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:text="@string/cast"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/castList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/row_actor" />
-
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+</ScrollView>
