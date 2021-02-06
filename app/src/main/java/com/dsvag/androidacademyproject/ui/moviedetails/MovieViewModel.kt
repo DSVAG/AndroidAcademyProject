@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.MovieRepository
 import com.dsvag.androidacademyproject.models.credits.Cast
-import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.movies.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

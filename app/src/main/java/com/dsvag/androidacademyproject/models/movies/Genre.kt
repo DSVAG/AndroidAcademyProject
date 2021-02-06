@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.models.movie
+package com.dsvag.androidacademyproject.models.movies
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

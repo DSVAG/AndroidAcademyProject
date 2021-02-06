@@ -3,7 +3,7 @@ package com.dsvag.androidacademyproject.data.repositories
 import com.dsvag.androidacademyproject.BuildConfig
 import com.dsvag.androidacademyproject.data.remote.ApiMovieService
 import com.dsvag.androidacademyproject.models.credits.Credits
-import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.movies.Movie
 import com.dsvag.androidacademyproject.models.movies.Request
 import retrofit2.Response
 import javax.inject.Inject

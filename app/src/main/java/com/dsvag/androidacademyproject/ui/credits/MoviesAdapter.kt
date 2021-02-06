@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.RowMovieSmallBinding
-import com.dsvag.androidacademyproject.models.moviecredits.Cast
+import com.dsvag.androidacademyproject.models.credits.Cast
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
@@ -39,14 +39,14 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
         fun bind(cast: Cast) {
             itemBinding.poster.clipToOutline = true
 
-            val url = "https://image.tmdb.org/t/p/w780" + cast.posterPath
+            val url = "https://image.tmdb.org/t/p/w780" + cast.profilePath
 
             itemBinding.poster.load(url) {
                 crossfade(true)
                 error(R.drawable.ic_launcher_foreground)
             }
 
-            itemBinding.name.text = cast.originalTitle
+            itemBinding.name.text = cast.originalName
 
             itemBinding.root.setOnClickListener {
                 val bundle = Bundle().apply { putInt("movieId", cast.id) }

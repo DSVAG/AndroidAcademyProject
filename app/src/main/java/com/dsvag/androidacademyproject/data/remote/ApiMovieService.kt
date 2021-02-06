@@ -1,7 +1,7 @@
 package com.dsvag.androidacademyproject.data.remote
 
 import com.dsvag.androidacademyproject.models.credits.Credits
-import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.movies.Movie
 import com.dsvag.androidacademyproject.models.movies.Request
 import retrofit2.Response
 import retrofit2.http.GET

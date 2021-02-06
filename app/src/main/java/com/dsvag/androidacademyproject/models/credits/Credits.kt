@@ -10,7 +10,4 @@ data class Credits(
 
     @Json(name = "cast")
     val cast: List<Cast>,
-
-    @Json(name = "crew")
-    val crew: List<Crew>
 )

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentMoviesBinding
+import com.dsvag.androidacademyproject.models.movies.Movie
 import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import com.google.android.material.tabs.TabLayout
@@ -43,7 +44,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
         })
 
-        moviesViewModel.result.observe(viewLifecycleOwner) { movieList ->
+        moviesViewModel.movies.observe(viewLifecycleOwner) { movieList: List<Movie>? ->
             movieList?.let { movieAdapter.setData(it) }
         }
 

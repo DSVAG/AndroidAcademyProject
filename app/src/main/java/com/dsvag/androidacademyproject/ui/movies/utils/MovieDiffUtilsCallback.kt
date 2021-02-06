@@ -1,11 +1,11 @@
 package com.dsvag.androidacademyproject.ui.movies.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.dsvag.androidacademyproject.models.movies.Result
+import com.dsvag.androidacademyproject.models.movies.Movie
 
 class MovieDiffUtilsCallback(
-    private val newList: List<Result>,
-    private val oldList: List<Result>
+    private val newList: List<Movie>,
+    private val oldList: List<Movie>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

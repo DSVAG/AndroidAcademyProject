@@ -1,6 +1,6 @@
 package com.dsvag.androidacademyproject.data.remote
 
-import com.dsvag.androidacademyproject.models.moviecredits.MovieCredits
+import com.dsvag.androidacademyproject.models.credits.Credits
 import com.dsvag.androidacademyproject.models.person.Person
 import retrofit2.Response
 import retrofit2.http.GET
@@ -18,6 +18,5 @@ interface ApiPersonService {
     suspend fun getPersonMovies(
         @Path("personId") personId: Int,
         @Query("api_key") api_key: String,
-    ): Response<MovieCredits>
-
+    ): Response<Credits>
 }

@@ -9,7 +9,7 @@ import coil.load
 import coil.transform.GrayscaleTransformation
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentMovieDetailsBinding
-import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.movies.Movie
 import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +56,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
 
         binding.title.text = movie.title
-        binding.genres.text = movie.genres.joinToString(", ") { it.name }
+        binding.genres.text = movie.genre?.joinToString(", ") { it.name }
         binding.rating.rating = movie.voteAverage.toFloat() / 2
         binding.review.text = movie.voteCount.toString().plus(" Reviews")
         binding.storyline.text = movie.overview

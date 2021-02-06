@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.PersonRepository
-import com.dsvag.androidacademyproject.models.moviecredits.Cast
+import com.dsvag.androidacademyproject.models.credits.Cast
 import com.dsvag.androidacademyproject.models.person.Person
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
