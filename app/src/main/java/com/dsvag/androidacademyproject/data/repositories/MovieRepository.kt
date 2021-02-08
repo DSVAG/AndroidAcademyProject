@@ -4,8 +4,8 @@ import com.dsvag.androidacademyproject.BuildConfig
 import com.dsvag.androidacademyproject.data.local.MovieDao
 import com.dsvag.androidacademyproject.data.remote.ApiMovieService
 import com.dsvag.androidacademyproject.models.credits.Credits
-import com.dsvag.androidacademyproject.models.movies.Movie
-import com.dsvag.androidacademyproject.models.movies.Request
+import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.movie.Request
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
@@ -24,11 +24,21 @@ class MovieRepository @Inject constructor(
         return apiMovieService.getTopRated(API_KEY, page)
     }
 
-    suspend fun getMovie(movieId: Int): Movie {
-        return apiMovieService.getMovie(movieId, API_KEY)
+    suspend fun getMovie(movieId: Long): Movie? {
+        var movie = runCatching { movieDao.getMovieById(movieId) }.getOrNull()
+
+        if (movie == null) {
+            movie = runCatching { apiMovieService.getMovie(movieId, API_KEY) }.getOrNull()
+
+            if (movie != null) {
+                movieDao.insert(movie)
+            }
+        }
+
+        return movie
     }
 
-    suspend fun getMovieCredits(movieId: Int): Credits {
+    suspend fun getMovieCredits(movieId: Long): Credits {
         return apiMovieService.getCredits(movieId, API_KEY)
     }
 

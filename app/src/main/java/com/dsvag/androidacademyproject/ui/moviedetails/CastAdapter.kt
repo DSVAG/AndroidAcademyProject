@@ -25,7 +25,7 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
         holder.bind(castList[position])
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply { putInt("castId", castList[position].id) }
+            val bundle = Bundle().apply { putLong("castId", castList[position].id) }
             holder.itemView.findNavController()
                 .navigate(R.id.action_movieDetailsFragment_to_creditFragment, bundle)
         }

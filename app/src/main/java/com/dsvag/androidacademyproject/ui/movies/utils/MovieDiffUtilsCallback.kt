@@ -1,7 +1,7 @@
 package com.dsvag.androidacademyproject.ui.movies.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.dsvag.androidacademyproject.models.movies.Movie
+import com.dsvag.androidacademyproject.models.movie.Movie
 
 class MovieDiffUtilsCallback(
     private val newList: List<Movie>,

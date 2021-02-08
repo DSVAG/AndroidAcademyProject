@@ -20,7 +20,7 @@ data class Person(
     @PrimaryKey(autoGenerate = false)
     @Json(name = "id")
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Long,
 
     @Json(name = "known_for_department")
     @ColumnInfo(name = "known_for_department")
@@ -36,5 +36,5 @@ data class Person(
 
     @Json(name = "profile_path")
     @ColumnInfo(name = "profile_path")
-    val profilePath: String?
+    val profilePath: String?,
 )

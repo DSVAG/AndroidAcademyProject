@@ -42,7 +42,7 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
 
     override fun onStart() {
         super.onStart()
-        val creditId = arguments?.getInt("castId") ?: 0
+        val creditId = arguments?.getLong("castId") ?: 0
 
         personViewModel.fetchPerson(creditId)
         personViewModel.fetchPersonMovie(creditId)

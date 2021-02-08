@@ -1,8 +1,8 @@
 package com.dsvag.androidacademyproject.data.remote
 
 import com.dsvag.androidacademyproject.models.credits.Credits
-import com.dsvag.androidacademyproject.models.movies.Movie
-import com.dsvag.androidacademyproject.models.movies.Request
+import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.movie.Request
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -28,13 +28,13 @@ interface ApiMovieService {
 
     @GET("movie/{id}")
     suspend fun getMovie(
-        @Path("id") id: Int,
+        @Path("id") id: Long,
         @Query("api_key") api_key: String,
     ): Movie
 
     @GET("movie/{id}/credits")
     suspend fun getCredits(
-        @Path("id") id: Int,
+        @Path("id") id: Long,
         @Query("api_key") api_key: String,
     ): Credits
 }

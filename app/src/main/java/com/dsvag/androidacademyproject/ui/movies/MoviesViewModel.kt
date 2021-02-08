@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.MovieRepository
-import com.dsvag.androidacademyproject.models.movies.Movie
-import com.dsvag.androidacademyproject.models.movies.Request
+import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.movie.Request
 import com.dsvag.androidacademyproject.ui.movies.MoviesViewModel.QueryType.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

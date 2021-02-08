@@ -9,7 +9,7 @@ import coil.load
 import coil.transform.GrayscaleTransformation
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentMovieDetailsBinding
-import com.dsvag.androidacademyproject.models.movies.Movie
+import com.dsvag.androidacademyproject.models.movie.Movie
 import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +41,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     override fun onStart() {
         super.onStart()
-        val movieId = arguments?.getInt("movieId") ?: 0
+        val movieId = arguments?.getLong("movieId") ?: 0
 
         movieViewModel.fetchMovie(movieId)
         movieViewModel.fetchCredits(movieId)

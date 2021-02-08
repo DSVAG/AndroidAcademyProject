@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Cast(
     @Json(name = "id")
-    val id: Int,
+    val id: Long,
 
     @Json(name = "name")
     val name: String,
@@ -16,9 +16,6 @@ data class Cast(
 
     @Json(name = "profile_path")
     val profilePath: String?,
-
-    @Json(name = "cast_id")
-    val castId: Int,
 
     @Json(name = "character")
     val character: String,

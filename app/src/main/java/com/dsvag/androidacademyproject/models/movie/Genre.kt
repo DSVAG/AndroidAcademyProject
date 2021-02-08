@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.models.movies
+package com.dsvag.androidacademyproject.models.movie
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Genre(
     @Json(name = "id")
-    val id: Int,
+    val id: Long,
 
     @Json(name = "name")
     val name: String

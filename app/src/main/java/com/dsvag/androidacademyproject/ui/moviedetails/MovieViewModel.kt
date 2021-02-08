@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.MovieRepository
 import com.dsvag.androidacademyproject.models.credits.Cast
-import com.dsvag.androidacademyproject.models.movies.Movie
+import com.dsvag.androidacademyproject.models.movie.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -19,9 +19,9 @@ class MovieViewModel @ViewModelInject constructor(
     private val _mutableCast = MutableLiveData<List<Cast>>()
     val cast get() = _mutableCast
 
-    fun fetchMovie(movieId: Int) {
+    fun fetchMovie(movieId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            val movieRequest = runCatching { movieRepository.getMovie(movieId) }.getOrNull()
+            val movieRequest = movieRepository.getMovie(movieId)
 
             if (movieRequest != null) {
                 _mutableMovie.postValue(movieRequest!!)
@@ -29,7 +29,7 @@ class MovieViewModel @ViewModelInject constructor(
         }
     }
 
-    fun fetchCredits(movieId: Int) {
+    fun fetchCredits(movieId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             val movieCredits = runCatching { movieRepository.getMovieCredits(movieId) }.getOrNull()
 

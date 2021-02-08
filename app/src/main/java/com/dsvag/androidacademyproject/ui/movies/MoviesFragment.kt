@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentMoviesBinding
-import com.dsvag.androidacademyproject.models.movies.Movie
+import com.dsvag.androidacademyproject.models.movie.Movie
 import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import com.google.android.material.tabs.TabLayout

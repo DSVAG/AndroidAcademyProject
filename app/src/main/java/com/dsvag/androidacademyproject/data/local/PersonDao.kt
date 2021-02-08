@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.dsvag.androidacademyproject.models.person.Person
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PersonDao {
@@ -17,5 +16,5 @@ interface PersonDao {
     suspend fun insertAll(persons: List<Person>)
 
     @Query("SELECT * FROM persons WHERE id = :id")
-    fun getPersonById(id: Int): Flow<Person>
+    fun getPersonById(id: Long): Person
 }

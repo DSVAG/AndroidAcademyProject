@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.models.movies
+package com.dsvag.androidacademyproject.models.movie
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -19,16 +19,16 @@ data class Movie(
 
     @Json(name = "genre_ids")
     @ColumnInfo(name = "genre_ids")
-    val genreIds: List<Int>?,
+    val genreIds: List<Long> = emptyList(),
 
     @Json(name = "genres")
     @ColumnInfo(name = "genres")
-    val genres: List<Genre>?,
+    val genres: List<Genre> = emptyList(),
 
     @PrimaryKey(autoGenerate = false)
     @Json(name = "id")
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Long,
 
     @Json(name = "overview")
     @ColumnInfo(name = "overview")
@@ -49,4 +49,7 @@ data class Movie(
     @Json(name = "vote_count")
     @ColumnInfo(name = "vote_count")
     val voteCount: Int,
+
+    @ColumnInfo(name = "cast_ids")
+    val castIds: List<Long> = emptyList()
 )

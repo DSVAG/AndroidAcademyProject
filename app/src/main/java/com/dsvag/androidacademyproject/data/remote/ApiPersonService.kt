@@ -9,13 +9,13 @@ import retrofit2.http.Query
 interface ApiPersonService {
     @GET("person/{personId}")
     suspend fun getPerson(
-        @Path("personId") personId: Int,
+        @Path("personId") personId: Long,
         @Query("api_key") api_key: String,
     ): Person
 
     @GET("person/{personId}/movie_credits")
     suspend fun getPersonMovies(
-        @Path("personId") personId: Int,
+        @Path("personId") personId: Long,
         @Query("api_key") api_key: String,
     ): PersonMovies
 }

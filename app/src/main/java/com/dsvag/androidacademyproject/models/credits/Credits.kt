@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class Credits(
     @Json(name = "id")
-    val id: Int,
+    val id: Long,
 
     @Json(name = "cast")
     val cast: List<Cast>,

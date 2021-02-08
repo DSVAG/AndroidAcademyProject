@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.RowMovieSmallBinding
-import com.dsvag.androidacademyproject.models.movies.Movie
+import com.dsvag.androidacademyproject.models.movie.Movie
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
@@ -23,7 +23,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
         holder.bind(movies[position])
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply { putInt("movieId", movies[position].id) }
+            val bundle = Bundle().apply { putLong("movieId", movies[position].id) }
             holder.itemView.findNavController()
                 .navigate(R.id.action_personFragment_to_movieDetailsFragment, bundle)
         }

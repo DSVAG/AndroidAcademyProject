@@ -11,11 +11,21 @@ class PersonRepository @Inject constructor(
     private val apiPersonService: ApiPersonService,
     private val personDao: PersonDao,
 ) {
-    suspend fun getPerson(personId: Int): Person {
-        return apiPersonService.getPerson(personId, API_KEY)
+    suspend fun getPerson(personId: Long): Person? {
+        var person = runCatching { personDao.getPersonById(personId) }.getOrNull()
+
+        if (person == null) {
+            person = runCatching { apiPersonService.getPerson(personId, API_KEY) }.getOrNull()
+
+            if (person != null) {
+                personDao.insert(person)
+            }
+        }
+
+        return person
     }
 
-    suspend fun getPersonMovies(personId: Int): PersonMovies {
+    suspend fun getPersonMovies(personId: Long): PersonMovies {
         return apiPersonService.getPersonMovies(personId, API_KEY)
     }
 
