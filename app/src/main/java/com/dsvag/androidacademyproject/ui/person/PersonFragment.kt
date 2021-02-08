@@ -21,18 +21,18 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
 
     private val personViewModel: PersonViewModel by viewModels()
 
-    private val castAdapter by lazy { MoviesAdapter() }
+    private val moviesAdapter by lazy { MoviesAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.filmList.addItemDecoration(ItemDecoration(16f))
-        binding.filmList.adapter = castAdapter
+        binding.filmList.adapter = moviesAdapter
 
         personViewModel.personData.observe(viewLifecycleOwner) { person ->
             person?.let { setPersonData(it) }
         }
 
         personViewModel.personMovieData.observe(viewLifecycleOwner) { movieCredits ->
-            movieCredits?.let { castAdapter.setData(it) }
+            movieCredits?.let { moviesAdapter.setData(it) }
         }
 
         binding.back.setOnClickListener {

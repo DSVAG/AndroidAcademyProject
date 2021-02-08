@@ -10,7 +10,6 @@ import com.dsvag.androidacademyproject.models.movies.Request
 import com.dsvag.androidacademyproject.ui.movies.MoviesViewModel.QueryType.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import kotlin.math.min
 
 class MoviesViewModel @ViewModelInject constructor(
@@ -81,27 +80,27 @@ class MoviesViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun fetchFirstPage(response: Response<Request>?) {
-        if (response != null && response.isSuccessful && response.body() != null) {
-            maxPageCounter = response.body()!!.totalResults
-            _mutableMovies.postValue(response.body()!!.movies.toMutableList())
+    private fun fetchFirstPage(request: Request?) {
+        if (request != null) {
+            maxPageCounter = request.totalResults
+            _mutableMovies.postValue(request.movies.toMutableList())
 
             setState(State.Success)
         } else {
-            setState(State.Error(response?.errorBody().toString()))
+            setState(State.Error("Something went wrong! Check network connection"))
         }
     }
 
-    private fun fetchNextPage(response: Response<Request>?) {
-        if (response != null && response.isSuccessful && response.body() != null) {
-            val value = _mutableMovies.value?.plus(response.body()!!.movies)
+    private fun fetchNextPage(request: Request?) {
+        if (request != null) {
+            val value = _mutableMovies.value?.plus(request.movies)
 
-            maxPageCounter = response.body()!!.totalResults
+            maxPageCounter = request.totalResults
             _mutableMovies.postValue(value?.toMutableList())
 
             setState(State.Success)
         } else {
-            setState(State.Error(response?.errorBody().toString()))
+            setState(State.Error("Something went wrong! Check network connection"))
         }
     }
 

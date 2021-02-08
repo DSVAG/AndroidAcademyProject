@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.PersonRepository
-import com.dsvag.androidacademyproject.models.credits.Cast
+import com.dsvag.androidacademyproject.models.movies.Movie
 import com.dsvag.androidacademyproject.models.person.Person
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,25 +16,26 @@ class PersonViewModel @ViewModelInject constructor(
     private var _mutablePersonData: MutableLiveData<Person> = MutableLiveData()
     val personData get() = _mutablePersonData
 
-    private val _mutablePersonMovieData: MutableLiveData<List<Cast>> = MutableLiveData()
+    private val _mutablePersonMovieData: MutableLiveData<List<Movie>> = MutableLiveData()
     val personMovieData get() = _mutablePersonMovieData
 
     fun fetchPerson(personId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = runCatching { personRepository.getPerson(personId) }.getOrNull()
+            val person = runCatching { personRepository.getPerson(personId) }.getOrNull()
 
-            if (response != null && response.isSuccessful && response.body() != null) {
-                _mutablePersonData.postValue(response.body())
+            if (person != null) {
+                _mutablePersonData.postValue(person)
             }
         }
     }
 
     fun fetchPersonMovie(personId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = runCatching { personRepository.getPersonMovies(personId) }.getOrNull()
+            val personMovies =
+                runCatching { personRepository.getPersonMovies(personId) }.getOrNull()
 
-            if (response != null && response.isSuccessful && response.body() != null) {
-                _mutablePersonMovieData.postValue(response.body()!!.cast)
+            if (personMovies != null) {
+                _mutablePersonMovieData.postValue(personMovies.asCast)
             }
         }
     }

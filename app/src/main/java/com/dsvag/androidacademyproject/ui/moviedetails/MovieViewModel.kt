@@ -21,20 +21,20 @@ class MovieViewModel @ViewModelInject constructor(
 
     fun fetchMovie(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = runCatching { movieRepository.getMovie(movieId) }.getOrNull()
+            val movieRequest = runCatching { movieRepository.getMovie(movieId) }.getOrNull()
 
-            if (response != null && response.isSuccessful && response.body() != null) {
-                _mutableMovie.postValue(response.body())
+            if (movieRequest != null) {
+                _mutableMovie.postValue(movieRequest!!)
             }
         }
     }
 
     fun fetchCredits(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = runCatching { movieRepository.getMovieCredits(movieId) }.getOrNull()
+            val movieCredits = runCatching { movieRepository.getMovieCredits(movieId) }.getOrNull()
 
-            if (response != null && response.isSuccessful && response.body() != null) {
-                _mutableCast.postValue(response.body()!!.cast)
+            if (movieCredits != null) {
+                _mutableCast.postValue(movieCredits.cast)
             }
         }
     }
