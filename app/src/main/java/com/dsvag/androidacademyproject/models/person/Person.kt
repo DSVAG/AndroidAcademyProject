@@ -1,6 +1,7 @@
 package com.dsvag.androidacademyproject.models.person
 
 import androidx.room.ColumnInfo
+import androidx.room.ColumnInfo.TEXT
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
@@ -37,4 +38,7 @@ data class Person(
     @Json(name = "profile_path")
     @ColumnInfo(name = "profile_path")
     val profilePath: String?,
+
+    @ColumnInfo(name = "movies_ids")
+    val moviesIds: List<Long> = emptyList(),
 )

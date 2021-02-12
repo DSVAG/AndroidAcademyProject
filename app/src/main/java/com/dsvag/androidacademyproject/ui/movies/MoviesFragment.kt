@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentMoviesBinding
 import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.ui.MainActivity
 import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import com.google.android.material.tabs.TabLayout
@@ -26,6 +27,8 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
     private val movieAdapter by lazy { MovieAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as MainActivity?)?.setBottomViewVisibility(true)
+
         binding.movieList.adapter = movieAdapter
         binding.movieList.addItemDecoration(ItemDecoration(16f))
 

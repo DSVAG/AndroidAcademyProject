@@ -7,8 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.MovieRepository
 import com.dsvag.androidacademyproject.models.credits.Cast
 import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.person.Person
+import com.dsvag.androidacademyproject.ui.movies.MoviesViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okio.IOException
+import retrofit2.HttpException
 
 class MovieViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository,
@@ -19,23 +24,23 @@ class MovieViewModel @ViewModelInject constructor(
     private val _mutableCast = MutableLiveData<List<Cast>>()
     val cast get() = _mutableCast
 
-    fun fetchMovie(movieId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val movieRequest = movieRepository.getMovie(movieId)
-
-            if (movieRequest != null) {
-                _mutableMovie.postValue(movieRequest!!)
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        when (throwable) {
+            is IOException -> {
+                // "Something went wrong! Check network connection"
+            }
+            is HttpException -> {
+                //"Something went wrong! Try later"
             }
         }
     }
 
-    fun fetchCredits(movieId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val movieCredits = runCatching { movieRepository.getMovieCredits(movieId) }.getOrNull()
+    fun fetchMovie(movieId: Long) {
+        viewModelScope.launch(exceptionHandler) {
+            val movie = movieRepository.getMovie(movieId)
 
-            if (movieCredits != null) {
-                _mutableCast.postValue(movieCredits.cast)
-            }
+            _mutableMovie.value = movie
+            _mutableCast.value = movieRepository.getMovieCredits(movieId)
         }
     }
 }

@@ -108,6 +108,6 @@ object AppModule {
         apiPersonService: ApiPersonService,
         appDatabase: AppDatabase,
     ): PersonRepository {
-        return PersonRepository(apiPersonService, appDatabase.personDao())
+        return PersonRepository(apiPersonService, appDatabase.movieDao(), appDatabase.personDao())
     }
 }

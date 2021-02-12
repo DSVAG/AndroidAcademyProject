@@ -26,22 +26,10 @@
         android:fontFamily="@font/roboto_medium"
         android:padding="8dp"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/photo"
-        app:layout_constraintStart_toStartOf="@id/photo"
-        app:layout_constraintTop_toBottomOf="@id/photo"
-        tools:text="@tools:sample/full_names" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/character"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_medium"
-        android:padding="8dp"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/photo"
         app:layout_constraintStart_toStartOf="@id/photo"
-        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/photo"
         tools:text="@tools:sample/full_names" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

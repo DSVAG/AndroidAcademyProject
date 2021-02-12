@@ -16,5 +16,8 @@ interface PersonDao {
     suspend fun insertAll(persons: List<Person>)
 
     @Query("SELECT * FROM persons WHERE id = :id")
-    fun getPersonById(id: Long): Person
+    suspend fun getPersonById(id: Long): Person?
+
+    @Query("SELECT * FROM persons WHERE id IN (:ids)")
+    suspend fun getPersonsByIds(ids: List<Long>): List<Person>
 }

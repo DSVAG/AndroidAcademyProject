@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.PersonRepository
 import com.dsvag.androidacademyproject.models.movie.Movie
 import com.dsvag.androidacademyproject.models.person.Person
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import okio.IOException
+import retrofit2.HttpException
 
 class PersonViewModel @ViewModelInject constructor(
     private val personRepository: PersonRepository,
@@ -16,27 +18,27 @@ class PersonViewModel @ViewModelInject constructor(
     private var _mutablePersonData: MutableLiveData<Person> = MutableLiveData()
     val personData get() = _mutablePersonData
 
-    private val _mutablePersonMovieData: MutableLiveData<List<Movie>> = MutableLiveData()
+    private var _mutablePersonMovieData: MutableLiveData<List<Movie>> = MutableLiveData()
     val personMovieData get() = _mutablePersonMovieData
 
-    fun fetchPerson(personId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val person = runCatching { personRepository.getPerson(personId) }.getOrNull()
-
-            if (person != null) {
-                _mutablePersonData.postValue(person)
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        when (throwable) {
+            is IOException -> {
+                // "Something went wrong! Check network connection"
+            }
+            is HttpException -> {
+                //"Something went wrong! Try later"
             }
         }
     }
 
-    fun fetchPersonMovie(personId: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val personMovies =
-                runCatching { personRepository.getPersonMovies(personId) }.getOrNull()
+    fun fetchPerson(personId: Long) {
+        viewModelScope.launch(exceptionHandler) {
+            val person = personRepository.getPersonWithMovies(personId)
 
-            if (personMovies != null) {
-                _mutablePersonMovieData.postValue(personMovies.asCast)
-            }
+            _mutablePersonData.value = person
+
+            _mutablePersonMovieData.value = personRepository.getPersonMovies(person.moviesIds)
         }
     }
 }

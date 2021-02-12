@@ -1,8 +1,8 @@
 package com.dsvag.androidacademyproject.data.remote
 
-import com.dsvag.androidacademyproject.models.credits.Credits
+import com.dsvag.androidacademyproject.models.credits.PersonsResponse
 import com.dsvag.androidacademyproject.models.movie.Movie
-import com.dsvag.androidacademyproject.models.movie.Request
+import com.dsvag.androidacademyproject.models.movie.MovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -12,19 +12,19 @@ interface ApiMovieService {
     suspend fun getNowPlaying(
         @Query("api_key") api_key: String,
         @Query("page") page: Int,
-    ): Request
+    ): MovieResponse
 
     @GET("movie/popular")
     suspend fun getPopular(
         @Query("api_key") api_key: String,
         @Query("page") page: Int,
-    ): Request
+    ): MovieResponse
 
     @GET("movie/top_rated")
     suspend fun getTopRated(
         @Query("api_key") api_key: String,
         @Query("page") page: Int,
-    ): Request
+    ): MovieResponse
 
     @GET("movie/{id}")
     suspend fun getMovie(
@@ -36,5 +36,5 @@ interface ApiMovieService {
     suspend fun getCredits(
         @Path("id") id: Long,
         @Query("api_key") api_key: String,
-    ): Credits
+    ): PersonsResponse
 }

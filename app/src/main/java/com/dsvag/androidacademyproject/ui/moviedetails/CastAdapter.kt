@@ -10,6 +10,7 @@ import coil.load
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.RowActorBinding
 import com.dsvag.androidacademyproject.models.credits.Cast
+import com.dsvag.androidacademyproject.models.person.Person
 
 class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
 
@@ -50,8 +51,7 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
             itemBinding.photo.background =
                 ContextCompat.getDrawable(itemBinding.root.context, R.drawable.bg_actor_photo)
 
-            itemBinding.name.text = cast.originalName
-            itemBinding.character.text = cast.character
+            itemBinding.name.text = cast.name
 
             val url = "https://image.tmdb.org/t/p/h632" + cast.profilePath
 
