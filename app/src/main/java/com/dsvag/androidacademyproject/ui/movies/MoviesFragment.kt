@@ -43,13 +43,12 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                 }
             }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                binding.movieList.layoutManager?.scrollToPosition(0)
+            }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
         })
-
-        moviesViewModel.movies.observe(viewLifecycleOwner) { movieList: List<Movie>? ->
-            movieList?.let { movieAdapter.setData(it) }
-        }
 
         binding.movieList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -66,10 +65,15 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
             when (state) {
                 MoviesViewModel.State.Default -> moviesViewModel.fetchNowPlaying()
                 MoviesViewModel.State.Loading -> setLoading(true)
+                is MoviesViewModel.State.Success -> isSuccess(state.movies)
                 is MoviesViewModel.State.Error -> showError(state.msg)
-                MoviesViewModel.State.Success -> setLoading(false)
             }
         }
+    }
+
+    private fun isSuccess(movies: List<Movie>) {
+        movieAdapter.setData(movies)
+        setLoading(false)
     }
 
     private fun setLoading(visibility: Boolean) {

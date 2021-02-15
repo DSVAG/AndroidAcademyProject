@@ -37,7 +37,6 @@ class PersonViewModel @ViewModelInject constructor(
             val person = personRepository.getPersonWithMovies(personId)
 
             _mutablePersonData.value = person
-
             _mutablePersonMovieData.value = personRepository.getPersonMovies(person.moviesIds)
         }
     }

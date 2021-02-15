@@ -9,7 +9,6 @@ import com.dsvag.androidacademyproject.models.movie.Movie
 import com.dsvag.androidacademyproject.models.movie.MovieResponse
 import com.dsvag.androidacademyproject.ui.movies.MoviesViewModel.QueryType.*
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.HttpException
@@ -18,11 +17,10 @@ import kotlin.math.min
 class MoviesViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
+    private val movieList = mutableListOf<Movie>()
+
     private val _mutableState = MutableLiveData<State>(State.Default)
     val state get() = _mutableState
-
-    private val _mutableMovies = MutableLiveData<MutableList<Movie>>()
-    val movies get() = _mutableMovies
 
     private var currentQueryType = TopRated
     private var pageCounter = 1
@@ -95,18 +93,19 @@ class MoviesViewModel @ViewModelInject constructor(
 
     private fun fetchFirstPage(movieResponse: MovieResponse) {
         maxPageCounter = movieResponse.totalResults
-        _mutableMovies.postValue(movieResponse.movies.toMutableList())
+        movieList.apply {
+            clear()
+            addAll(movieResponse.movies)
+        }
 
-        setState(State.Success)
+        setState(State.Success(movieList))
     }
 
     private fun fetchNextPage(movieResponse: MovieResponse) {
-        val value = _mutableMovies.value?.plus(movieResponse.movies)
-
         maxPageCounter = movieResponse.totalResults
-        _mutableMovies.value = value?.toMutableList()
+        movieList.addAll(movieResponse.movies)
 
-        setState(State.Success)
+        setState(State.Success(movieList))
     }
 
     private fun setState(state: State) {
@@ -118,8 +117,8 @@ class MoviesViewModel @ViewModelInject constructor(
     sealed class State {
         object Default : State()
         object Loading : State()
-        object Success : State()
 
+        data class Success(val movies: List<Movie>) : State()
         data class Error(val msg: String) : State()
     }
 
