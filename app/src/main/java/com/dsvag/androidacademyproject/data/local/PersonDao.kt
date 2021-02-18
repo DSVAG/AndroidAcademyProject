@@ -20,4 +20,7 @@ interface PersonDao {
 
     @Query("SELECT * FROM persons WHERE id IN (:ids)")
     suspend fun getPersonsByIds(ids: List<Long>): List<Person>
+
+    @Query("SELECT id FROM persons")
+    suspend fun getPersonsIds(): List<Long>
 }

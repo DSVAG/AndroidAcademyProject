@@ -16,7 +16,7 @@ import com.dsvag.androidacademyproject.ui.movies.utils.MovieDiffUtilsCallback
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    private val resultList: MutableList<Movie> = mutableListOf()
+    private val movies: MutableList<Movie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -24,22 +24,22 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(resultList[position])
+        holder.bind(movies[position])
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle().apply { putLong("movieId", resultList[position].id) }
+            val bundle = Bundle().apply { putLong("movieId", movies[position].id) }
             holder.itemView.findNavController()
                 .navigate(R.id.action_moviesFragment_to_movieDetailsFragment, bundle)
         }
     }
 
-    override fun getItemCount(): Int = resultList.size
+    override fun getItemCount(): Int = movies.size
 
     fun setData(newData: List<Movie>) {
-        DiffUtil.calculateDiff(MovieDiffUtilsCallback(newData, resultList)).dispatchUpdatesTo(this)
+        DiffUtil.calculateDiff(MovieDiffUtilsCallback(newData, movies)).dispatchUpdatesTo(this)
 
-        resultList.clear()
-        resultList.addAll(newData)
+        movies.clear()
+        movies.addAll(newData)
     }
 
     class MovieViewHolder(private val itemBinding: RowMovieBinding) :

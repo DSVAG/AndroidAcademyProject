@@ -1,6 +1,5 @@
 package com.dsvag.androidacademyproject.data.repositories
 
-import com.dsvag.androidacademyproject.BuildConfig
 import com.dsvag.androidacademyproject.data.local.MovieDao
 import com.dsvag.androidacademyproject.data.local.PersonDao
 import com.dsvag.androidacademyproject.data.remote.ApiPersonService
@@ -20,8 +19,8 @@ class PersonRepository @Inject constructor(
             return person
         }
 
-        person = apiPersonService.getPerson(personId, API_KEY)
-        val movies = apiPersonService.getPersonMovies(personId, API_KEY)
+        person = apiPersonService.getPerson(personId)
+        val movies = apiPersonService.getPersonMovies(personId)
 
         movieDao.insertAll(movies.asCast)
 
@@ -36,7 +35,12 @@ class PersonRepository @Inject constructor(
         return movieDao.getMoviesByIds(moviesIds)
     }
 
-    companion object {
-        private const val API_KEY = BuildConfig.API_KEY
+    suspend fun updateCache() {
+        val listIds = personDao.getPersonsIds()
+
+        listIds.forEach { id ->
+            val newPerson = apiPersonService.getPerson(id)
+            personDao.insert(newPerson)
+        }
     }
 }

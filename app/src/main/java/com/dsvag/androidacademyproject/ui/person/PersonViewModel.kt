@@ -1,18 +1,20 @@
 package com.dsvag.androidacademyproject.ui.person
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.PersonRepository
 import com.dsvag.androidacademyproject.models.movie.Movie
 import com.dsvag.androidacademyproject.models.person.Person
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class PersonViewModel @ViewModelInject constructor(
+@HiltViewModel
+class PersonViewModel @Inject constructor(
     private val personRepository: PersonRepository,
 ) : ViewModel() {
     private var _mutablePersonData: MutableLiveData<Person> = MutableLiveData()

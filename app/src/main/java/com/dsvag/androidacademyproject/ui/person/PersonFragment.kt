@@ -1,7 +1,6 @@
 package com.dsvag.androidacademyproject.ui.person
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels

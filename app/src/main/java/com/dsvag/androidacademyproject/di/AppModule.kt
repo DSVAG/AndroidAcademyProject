@@ -13,20 +13,18 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Singleton
     @Provides
     fun provideInterceptor(): Interceptor {
         return Interceptor { chain ->
@@ -35,6 +33,7 @@ object AppModule {
                 .request()
                 .url
                 .newBuilder()
+                .addQueryParameter("api_key", BuildConfig.API_KEY)
                 .build()
 
             val request = chain
@@ -47,7 +46,6 @@ object AppModule {
         }
     }
 
-    @Singleton
     @Provides
     fun provideOkHttpClient(requestInterceptor: Interceptor): OkHttpClient {
         return OkHttpClient.Builder()
@@ -56,13 +54,11 @@ object AppModule {
             .build()
     }
 
-    @Singleton
     @Provides
     fun provideMoshi(): Moshi {
         return Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
     }
 
-    @Singleton
     @Provides
     fun provideRetrofit(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
@@ -72,28 +68,23 @@ object AppModule {
             .build()
     }
 
-    @Singleton
     @Provides
     fun provideApiMovieData(retrofit: Retrofit): ApiMovieService {
         return retrofit.create(ApiMovieService::class.java)
     }
 
-    @Singleton
     @Provides
     fun provideApiPersonData(retrofit: Retrofit): ApiPersonService {
         return retrofit.create(ApiPersonService::class.java)
     }
 
-    @Singleton
     @Provides
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room
             .databaseBuilder(context, AppDatabase::class.java, "MoviesAndPersons.db")
             .build()
-
     }
 
-    @Singleton
     @Provides
     fun provideMovieRepository(
         apiMovieService: ApiMovieService,
@@ -102,7 +93,6 @@ object AppModule {
         return MovieRepository(apiMovieService, appDatabase.movieDao())
     }
 
-    @Singleton
     @Provides
     fun providePersonRepository(
         apiPersonService: ApiPersonService,

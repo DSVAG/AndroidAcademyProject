@@ -1,6 +1,6 @@
 package com.dsvag.androidacademyproject.ui.movies
 
-import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,23 +8,27 @@ import com.dsvag.androidacademyproject.data.repositories.MovieRepository
 import com.dsvag.androidacademyproject.models.movie.Movie
 import com.dsvag.androidacademyproject.models.movie.MovieResponse
 import com.dsvag.androidacademyproject.ui.movies.MoviesViewModel.QueryType.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.HttpException
+import javax.inject.Inject
 import kotlin.math.min
 
-class MoviesViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MoviesViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
     private val movieList = mutableListOf<Movie>()
 
-    private val _mutableState = MutableLiveData<State>(State.Default)
-    val state get() = _mutableState
+    private val _state = MutableLiveData<State>(State.Default)
+    val state: LiveData<State> get() = _state
 
     private var currentQueryType = TopRated
     private var pageCounter = 1
     private var maxPageCounter = 1
+
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         when (throwable) {
@@ -110,7 +114,7 @@ class MoviesViewModel @ViewModelInject constructor(
 
     private fun setState(state: State) {
         viewModelScope.launch {
-            _mutableState.value = state
+            _state.value = state
         }
     }
 

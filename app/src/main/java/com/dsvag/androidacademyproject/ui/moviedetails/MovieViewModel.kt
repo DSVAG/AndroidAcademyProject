@@ -1,21 +1,20 @@
 package com.dsvag.androidacademyproject.ui.moviedetails
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.MovieRepository
 import com.dsvag.androidacademyproject.models.credits.Cast
 import com.dsvag.androidacademyproject.models.movie.Movie
-import com.dsvag.androidacademyproject.models.person.Person
-import com.dsvag.androidacademyproject.ui.movies.MoviesViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class MovieViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MovieViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
     private val _mutableMovie = MutableLiveData<Movie>()
