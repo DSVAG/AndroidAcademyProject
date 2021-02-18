@@ -5,37 +5,47 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.MovieRepository
-import com.dsvag.androidacademyproject.models.movies.Request
-import com.dsvag.androidacademyproject.models.movies.Result
+import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.movie.MovieResponse
 import com.dsvag.androidacademyproject.ui.movies.MoviesViewModel.QueryType.*
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import retrofit2.Response
+import okio.IOException
+import retrofit2.HttpException
 import kotlin.math.min
 
 class MoviesViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
+    private val movieList = mutableListOf<Movie>()
+
     private val _mutableState = MutableLiveData<State>(State.Default)
     val state get() = _mutableState
-
-    private val _mutableResult = MutableLiveData<List<Result>>()
-    val result get() = _mutableResult
 
     private var currentQueryType = TopRated
     private var pageCounter = 1
     private var maxPageCounter = 1
-    private var searchQuery: String? = null
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        when (throwable) {
+            is IOException -> {
+                setState(State.Error("Something went wrong! Check network connection"))
+            }
+            is HttpException -> {
+                setState(State.Error("Something went wrong! Try later"))
+            }
+        }
+    }
 
     fun fetchNowPlaying() {
         setState(State.Loading)
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(exceptionHandler) {
             if (currentQueryType != Now) {
                 pageCounter = 1
                 currentQueryType = Now
 
-                fetchFirstPage(runCatching { movieRepository.getNowPlaying(pageCounter) }.getOrNull())
+                fetchFirstPage(movieRepository.getNowPlaying(pageCounter))
             }
         }
     }
@@ -43,12 +53,12 @@ class MoviesViewModel @ViewModelInject constructor(
     fun fetchPopular() {
         setState(State.Loading)
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(exceptionHandler) {
             if (currentQueryType != Popular) {
                 pageCounter = 1
                 currentQueryType = Popular
 
-                fetchFirstPage(runCatching { movieRepository.getPopular(pageCounter) }.getOrNull())
+                fetchFirstPage(movieRepository.getPopular(pageCounter))
             }
         }
     }
@@ -56,49 +66,12 @@ class MoviesViewModel @ViewModelInject constructor(
     fun fetchTopRated() {
         setState(State.Loading)
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(exceptionHandler) {
             if (currentQueryType != TopRated) {
                 pageCounter = 1
                 currentQueryType = TopRated
 
-                fetchFirstPage(runCatching { movieRepository.getTopRated(pageCounter) }.getOrNull())
-            }
-        }
-    }
-
-    fun search(query: String?) {
-        searchQuery = query
-        setState(State.Loading)
-
-        viewModelScope.launch(Dispatchers.IO) {
-            if (searchQuery != null) {
-                if (currentQueryType != Search) {
-                    pageCounter = 1
-                    currentQueryType = Search
-
-                    val response = movieRepository.search(query!!, pageCounter)
-
-                    if (response.isSuccessful && response.body() != null) {
-
-                        maxPageCounter = response.body()!!.totalResults
-                        _mutableResult.postValue(response.body()!!.results)
-                        setState(State.Success)
-                    } else {
-                        setState(State.Error(response.errorBody().toString()))
-                    }
-                } else {
-                    val response = movieRepository.search(query!!, pageCounter)
-
-                    if (response.isSuccessful && response.body() != null) {
-                        val value = _mutableResult.value?.plus(response.body()!!.results)
-
-                        maxPageCounter = response.body()!!.totalResults
-                        _mutableResult.postValue(value?.toMutableList())
-                        setState(State.Success)
-                    } else {
-                        setState(State.Error(response.errorBody().toString()))
-                    }
-                }
+                fetchFirstPage(movieRepository.getTopRated(pageCounter))
             }
         }
     }
@@ -108,44 +81,35 @@ class MoviesViewModel @ViewModelInject constructor(
             setState(State.Loading)
             pageCounter = min(pageCounter + 1, maxPageCounter)
 
-            viewModelScope.launch(Dispatchers.IO) {
-
+            viewModelScope.launch(exceptionHandler) {
                 when (currentQueryType) {
-                    Now -> fetchNextPage(runCatching { movieRepository.getNowPlaying(pageCounter) }.getOrNull())
-                    Popular -> fetchNextPage(runCatching { movieRepository.getPopular(pageCounter) }.getOrNull())
-                    TopRated -> fetchNextPage(runCatching { movieRepository.getTopRated(pageCounter) }.getOrNull())
-                    Search -> search(searchQuery)
+                    Now -> fetchNextPage(movieRepository.getNowPlaying(pageCounter))
+                    Popular -> fetchNextPage(movieRepository.getPopular(pageCounter))
+                    TopRated -> fetchNextPage(movieRepository.getTopRated(pageCounter))
                 }
             }
         }
     }
 
-    private fun fetchFirstPage(response: Response<Request>?) {
-        if (response != null && response.isSuccessful && response.body() != null) {
-            maxPageCounter = response.body()!!.totalResults
-            _mutableResult.postValue(response.body()!!.results.toMutableList())
-
-            setState(State.Success)
-        } else {
-            setState(State.Error(response?.errorBody().toString()))
+    private fun fetchFirstPage(movieResponse: MovieResponse) {
+        maxPageCounter = movieResponse.totalResults
+        movieList.apply {
+            clear()
+            addAll(movieResponse.movies)
         }
+
+        setState(State.Success(movieList))
     }
 
-    private fun fetchNextPage(response: Response<Request>?) {
-        if (response != null && response.isSuccessful && response.body() != null) {
-            val value = _mutableResult.value?.plus(response.body()!!.results)
+    private fun fetchNextPage(movieResponse: MovieResponse) {
+        maxPageCounter = movieResponse.totalResults
+        movieList.addAll(movieResponse.movies)
 
-            maxPageCounter = response.body()!!.totalResults
-            _mutableResult.postValue(value?.toMutableList())
-
-            setState(State.Success)
-        } else {
-            setState(State.Error(response?.errorBody().toString()))
-        }
+        setState(State.Success(movieList))
     }
 
     private fun setState(state: State) {
-        viewModelScope.launch(Dispatchers.Main.immediate) {
+        viewModelScope.launch {
             _mutableState.value = state
         }
     }
@@ -153,12 +117,12 @@ class MoviesViewModel @ViewModelInject constructor(
     sealed class State {
         object Default : State()
         object Loading : State()
-        object Success : State()
 
+        data class Success(val movies: List<Movie>) : State()
         data class Error(val msg: String) : State()
     }
 
     private enum class QueryType {
-        Now, Popular, TopRated, Search
+        Now, Popular, TopRated
     }
 }

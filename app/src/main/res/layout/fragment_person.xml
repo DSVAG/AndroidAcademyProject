@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
     android:background="?attr/background"
     android:overScrollMode="never"
-    tools:context=".ui.credits.CreditFragment">
+    android:scrollbars="none"
+    tools:context=".ui.person.PersonFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -84,6 +84,7 @@
             app:layout_constraintBottom_toTopOf="@+id/placeOfBirth"
             app:layout_constraintEnd_toEndOf="@+id/margin"
             app:layout_constraintStart_toEndOf="@+id/photo"
+            app:layout_constraintTop_toBottomOf="@id/backdrop"
             tools:text="@tools:sample/full_names" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -97,6 +98,7 @@
             app:layout_constraintBottom_toTopOf="@+id/knownForDepartment"
             app:layout_constraintEnd_toEndOf="@+id/margin"
             app:layout_constraintStart_toEndOf="@+id/photo"
+            app:layout_constraintTop_toBottomOf="@id/dateOfBirth"
             tools:text="@tools:sample/full_names" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -110,6 +112,7 @@
             app:layout_constraintBottom_toTopOf="@+id/filmography"
             app:layout_constraintEnd_toEndOf="@+id/margin"
             app:layout_constraintStart_toEndOf="@+id/photo"
+            app:layout_constraintTop_toBottomOf="@id/placeOfBirth"
             tools:text="@tools:sample/full_names" />
 
         <com.google.android.material.textview.MaterialTextView

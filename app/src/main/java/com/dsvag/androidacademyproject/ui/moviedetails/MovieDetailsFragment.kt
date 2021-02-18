@@ -10,6 +10,7 @@ import coil.transform.GrayscaleTransformation
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentMovieDetailsBinding
 import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.ui.MainActivity
 import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,8 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     private val castAdapter by lazy { CastAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as MainActivity?)?.setBottomViewVisibility(false)
+
         binding.castList.addItemDecoration(ItemDecoration(16f))
         binding.castList.adapter = castAdapter
 
@@ -41,10 +44,9 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     override fun onStart() {
         super.onStart()
-        val movieId = arguments?.getInt("movieId") ?: 0
+        val movieId = arguments?.getLong("movieId") ?: 0
 
         movieViewModel.fetchMovie(movieId)
-        movieViewModel.fetchCredits(movieId)
     }
 
     private fun setMovieData(movie: Movie) {
@@ -56,7 +58,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
 
         binding.title.text = movie.title
-        binding.genres.text = movie.genres.joinToString(", ") { it.name }
+        binding.genres.text = movie.genres?.joinToString(", ") { it.name }
         binding.rating.rating = movie.voteAverage.toFloat() / 2
         binding.review.text = movie.voteCount.toString().plus(" Reviews")
         binding.storyline.text = movie.overview

@@ -4,13 +4,10 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Credits(
+data class PersonsResponse(
     @Json(name = "id")
-    val id: Int,
+    val id: Long,
 
     @Json(name = "cast")
     val cast: List<Cast>,
-
-    @Json(name = "crew")
-    val crew: List<Crew>
 )

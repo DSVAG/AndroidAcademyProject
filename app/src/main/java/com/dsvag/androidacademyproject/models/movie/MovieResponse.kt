@@ -1,18 +1,15 @@
-package com.dsvag.androidacademyproject.models.movies
+package com.dsvag.androidacademyproject.models.movie
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Request(
-    @Json(name = "dates")
-    val dates: Dates?,
-
+data class MovieResponse(
     @Json(name = "page")
     val page: Int,
 
     @Json(name = "results")
-    val results: List<Result>,
+    val movies: List<Movie>,
 
     @Json(name = "total_pages")
     val totalPages: Int,

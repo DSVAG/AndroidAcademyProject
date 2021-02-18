@@ -1,6 +1,7 @@
-package com.dsvag.androidacademyproject.ui.credits
+package com.dsvag.androidacademyproject.ui.person
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -9,30 +10,33 @@ import coil.load
 import coil.transform.BlurTransformation
 import coil.transform.RoundedCornersTransformation
 import com.dsvag.androidacademyproject.R
-import com.dsvag.androidacademyproject.databinding.FragmentCreditBinding
+import com.dsvag.androidacademyproject.databinding.FragmentPersonBinding
 import com.dsvag.androidacademyproject.models.person.Person
+import com.dsvag.androidacademyproject.ui.MainActivity
 import com.dsvag.androidacademyproject.ui.viewBinding
 import com.dsvag.androidacademyproject.utils.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreditFragment : Fragment(R.layout.fragment_credit) {
-    private val binding by viewBinding(FragmentCreditBinding::bind)
+class PersonFragment : Fragment(R.layout.fragment_person) {
+    private val binding by viewBinding(FragmentPersonBinding::bind)
 
     private val personViewModel: PersonViewModel by viewModels()
 
-    private val castAdapter by lazy { MoviesAdapter() }
+    private val moviesAdapter by lazy { MoviesAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as MainActivity?)?.setBottomViewVisibility(false)
+
         binding.filmList.addItemDecoration(ItemDecoration(16f))
-        binding.filmList.adapter = castAdapter
+        binding.filmList.adapter = moviesAdapter
 
         personViewModel.personData.observe(viewLifecycleOwner) { person ->
             person?.let { setPersonData(it) }
         }
 
         personViewModel.personMovieData.observe(viewLifecycleOwner) { movieCredits ->
-            movieCredits?.let { castAdapter.setData(it) }
+            movieCredits?.let { moviesAdapter.setData(it) }
         }
 
         binding.back.setOnClickListener {
@@ -42,10 +46,9 @@ class CreditFragment : Fragment(R.layout.fragment_credit) {
 
     override fun onStart() {
         super.onStart()
-        val creditId = arguments?.getInt("castId") ?: 0
+        val creditId = arguments?.getLong("castId") ?: 0
 
         personViewModel.fetchPerson(creditId)
-        personViewModel.fetchPersonMovie(creditId)
     }
 
     private fun setPersonData(person: Person) {

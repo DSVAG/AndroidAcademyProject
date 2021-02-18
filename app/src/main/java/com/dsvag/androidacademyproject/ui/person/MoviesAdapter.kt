@@ -1,4 +1,4 @@
-package com.dsvag.androidacademyproject.ui.credits
+package com.dsvag.androidacademyproject.ui.person
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.RowMovieSmallBinding
-import com.dsvag.androidacademyproject.models.moviecredits.Cast
+import com.dsvag.androidacademyproject.models.movie.Movie
 
 class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
-    private val castList: MutableList<Cast> = mutableListOf()
+    private val movies: MutableList<Movie> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,15 +20,21 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(castList[position])
+        holder.bind(movies[position])
+
+        holder.itemView.setOnClickListener {
+            val bundle = Bundle().apply { putLong("movieId", movies[position].id) }
+            holder.itemView.findNavController()
+                .navigate(R.id.action_personFragment_to_movieDetailsFragment, bundle)
+        }
     }
 
-    override fun getItemCount(): Int = castList.size
+    override fun getItemCount(): Int = movies.size
 
-    fun setData(newCastList: List<Cast>) {
-        castList.apply {
-            castList.clear()
-            addAll(newCastList)
+    fun setData(newMovies: List<Movie>) {
+        movies.apply {
+            movies.clear()
+            addAll(newMovies)
         }
 
         notifyDataSetChanged()
@@ -36,23 +42,17 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(private val itemBinding: RowMovieSmallBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(cast: Cast) {
+        fun bind(movie: Movie) {
             itemBinding.poster.clipToOutline = true
 
-            val url = "https://image.tmdb.org/t/p/w780" + cast.posterPath
+            val url = "https://image.tmdb.org/t/p/w780" + movie.posterPath
 
             itemBinding.poster.load(url) {
                 crossfade(true)
                 error(R.drawable.ic_launcher_foreground)
             }
 
-            itemBinding.name.text = cast.originalTitle
-
-            itemBinding.root.setOnClickListener {
-                val bundle = Bundle().apply { putInt("movieId", cast.id) }
-                itemBinding.root.findNavController()
-                    .navigate(R.id.action_creditFragment_to_movieDetailsFragment, bundle)
-            }
+            itemBinding.name.text = movie.title
         }
     }
 }

@@ -1,28 +1,25 @@
-package com.dsvag.androidacademyproject.ui.moviedetails
+package com.dsvag.androidacademyproject.ui.person
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dsvag.androidacademyproject.data.repositories.MovieRepository
-import com.dsvag.androidacademyproject.models.credits.Cast
+import com.dsvag.androidacademyproject.data.repositories.PersonRepository
 import com.dsvag.androidacademyproject.models.movie.Movie
 import com.dsvag.androidacademyproject.models.person.Person
-import com.dsvag.androidacademyproject.ui.movies.MoviesViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.HttpException
 
-class MovieViewModel @ViewModelInject constructor(
-    private val movieRepository: MovieRepository,
+class PersonViewModel @ViewModelInject constructor(
+    private val personRepository: PersonRepository,
 ) : ViewModel() {
-    private val _mutableMovie = MutableLiveData<Movie>()
-    val movie get() = _mutableMovie
+    private var _mutablePersonData: MutableLiveData<Person> = MutableLiveData()
+    val personData get() = _mutablePersonData
 
-    private val _mutableCast = MutableLiveData<List<Cast>>()
-    val cast get() = _mutableCast
+    private var _mutablePersonMovieData: MutableLiveData<List<Movie>> = MutableLiveData()
+    val personMovieData get() = _mutablePersonMovieData
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         when (throwable) {
@@ -35,12 +32,12 @@ class MovieViewModel @ViewModelInject constructor(
         }
     }
 
-    fun fetchMovie(movieId: Long) {
+    fun fetchPerson(personId: Long) {
         viewModelScope.launch(exceptionHandler) {
-            val movie = movieRepository.getMovie(movieId)
+            val person = personRepository.getPersonWithMovies(personId)
 
-            _mutableMovie.value = movie
-            _mutableCast.value = movieRepository.getMovieCredits(movieId)
+            _mutablePersonData.value = person
+            _mutablePersonMovieData.value = personRepository.getPersonMovies(person.moviesIds)
         }
     }
 }

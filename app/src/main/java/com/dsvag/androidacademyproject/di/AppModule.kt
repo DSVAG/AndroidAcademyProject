@@ -1,6 +1,9 @@
 package com.dsvag.androidacademyproject.di
 
+import android.content.Context
+import androidx.room.Room
 import com.dsvag.androidacademyproject.BuildConfig
+import com.dsvag.androidacademyproject.data.local.AppDatabase
 import com.dsvag.androidacademyproject.data.remote.ApiMovieService
 import com.dsvag.androidacademyproject.data.remote.ApiPersonService
 import com.dsvag.androidacademyproject.data.repositories.MovieRepository
@@ -11,6 +14,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -82,13 +86,28 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideMovieRepository(apiMovieService: ApiMovieService): MovieRepository {
-        return MovieRepository(apiMovieService)
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room
+            .databaseBuilder(context, AppDatabase::class.java, "MoviesAndPersons.db")
+            .build()
+
     }
 
     @Singleton
     @Provides
-    fun providePersonRepository(apiPersonService: ApiPersonService): PersonRepository {
-        return PersonRepository(apiPersonService)
+    fun provideMovieRepository(
+        apiMovieService: ApiMovieService,
+        appDatabase: AppDatabase,
+    ): MovieRepository {
+        return MovieRepository(apiMovieService, appDatabase.movieDao())
+    }
+
+    @Singleton
+    @Provides
+    fun providePersonRepository(
+        apiPersonService: ApiPersonService,
+        appDatabase: AppDatabase,
+    ): PersonRepository {
+        return PersonRepository(apiPersonService, appDatabase.movieDao(), appDatabase.personDao())
     }
 }
