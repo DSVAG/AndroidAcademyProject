@@ -3,7 +3,6 @@ package com.dsvag.androidacademyproject.ui.movies
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -77,7 +76,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
     }
 
     private fun setLoading(visibility: Boolean) {
-        binding.loadingIndicator.isVisible = visibility
+        // binding.loadingIndicator.isVisible = visibility
     }
 
     private fun showError(msg: String) {

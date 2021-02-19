@@ -1,6 +1,7 @@
 package com.dsvag.androidacademyproject
 
 import android.app.Application
+import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import androidx.work.WorkManager
@@ -14,16 +15,11 @@ class App : Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
-    override fun getWorkManagerConfiguration(): Configuration {
-        val configuration = Configuration
-            .Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
-
-        WorkManager.initialize(this, configuration)
-
-        return configuration
-    }
+    override fun getWorkManagerConfiguration() = Configuration
+        .Builder()
+        .setWorkerFactory(workerFactory)
+        .setMinimumLoggingLevel(Log.INFO)
+        .build()
 
     override fun onCreate() {
         super.onCreate()

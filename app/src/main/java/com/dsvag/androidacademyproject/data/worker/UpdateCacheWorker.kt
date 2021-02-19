@@ -3,8 +3,6 @@ package com.dsvag.androidacademyproject.data.worker
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
-import com.dsvag.androidacademyproject.data.repositories.MovieRepository
-import com.dsvag.androidacademyproject.data.repositories.PersonRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.util.concurrent.TimeUnit
@@ -13,14 +11,14 @@ import java.util.concurrent.TimeUnit
 class UpdateCacheWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
-    private val personRepository: PersonRepository,
-    private val movieRepository: MovieRepository,
+//    private val personRepository: PersonRepository,
+//    private val movieRepository: MovieRepository,
 ) : CoroutineWorker(appContext, workerParams) {
 
     override suspend fun doWork(): Result {
         return try {
-            movieRepository.updateCache()
-            personRepository.updateCache()
+//            movieRepository.updateCache()
+//            personRepository.updateCache()
 
             Result.success()
         } catch (error: Throwable) {
