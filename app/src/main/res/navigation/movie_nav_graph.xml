@@ -18,18 +18,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/ticketsFragment"
-        android:name="com.dsvag.androidacademyproject.ui.tickets.TicketsFragment"
-        android:label="fragment_ticketsragment"
-        tools:layout="@layout/fragment_tickets" />
-
-    <fragment
-        android:id="@+id/cinemasFragment"
-        android:name="com.dsvag.androidacademyproject.ui.cinemas.CinemasFragment"
-        android:label="fragment_cinemas"
-        tools:layout="@layout/fragment_cinemas" />
-
-    <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.dsvag.androidacademyproject.ui.moviedetails.MovieDetailsFragment"
         android:label="MovieDetailsFragment"
