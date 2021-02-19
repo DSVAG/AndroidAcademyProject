@@ -46,10 +46,13 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
 
     private fun stateObserver(state: PersonViewModel.State) {
         when (state) {
-            PersonViewModel.State.Loading -> binding.container.isVisible = false
+            PersonViewModel.State.Loading -> {
+                binding.container.isVisible = false
+                loadingVisibility(true)
+            }
             is PersonViewModel.State.Error -> {
                 Toast.makeText(requireContext(), state.msg, Toast.LENGTH_LONG).show()
-                findNavController().popBackStack()
+                loadingVisibility(false)
             }
             is PersonViewModel.State.Success -> {
                 setPersonData(state.person)
@@ -80,5 +83,10 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
         binding.biography.text = person.biography
 
         binding.container.isVisible = true
+        loadingVisibility(false)
+    }
+
+    private fun loadingVisibility(visibility: Boolean) {
+        (activity as MainActivity?)?.loadingVisibility(visibility)
     }
 }

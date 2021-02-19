@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dsvag.androidacademyproject.data.repositories.MovieRepository
-import com.dsvag.androidacademyproject.models.credits.Cast
 import com.dsvag.androidacademyproject.models.movie.Movie
+import com.dsvag.androidacademyproject.models.person.Person
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ class MovieViewModel @Inject constructor(
 
         viewModelScope.launch(exceptionHandler) {
             val movie = movieRepository.getMovie(movieId)
-            val movieCredits = movieRepository.getMovieCredits(movieId)
+            val movieCredits = movieRepository.getMovieCredits(movie)
 
             _state.value = State.Success(movie, movieCredits)
         }
@@ -47,7 +47,7 @@ class MovieViewModel @Inject constructor(
     sealed class State {
         object Loading : State()
 
-        data class Success(val movie: Movie, val movieCredits: List<Cast>) : State()
+        data class Success(val movie: Movie, val movieCredits: List<Person>) : State()
         data class Error(val msg: String) : State()
     }
 }

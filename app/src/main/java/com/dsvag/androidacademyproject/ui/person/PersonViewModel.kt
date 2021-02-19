@@ -38,7 +38,7 @@ class PersonViewModel @Inject constructor(
 
         viewModelScope.launch(exceptionHandler) {
             val person = personRepository.getPersonWithMovies(personId)
-            val personMovie = personRepository.getPersonMovies(person.moviesIds)
+            val personMovie = personRepository.getPersonMovies(person)
 
             _state.value = State.Success(person, personMovie)
         }

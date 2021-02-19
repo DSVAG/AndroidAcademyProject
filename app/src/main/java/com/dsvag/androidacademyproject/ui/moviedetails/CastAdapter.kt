@@ -3,18 +3,16 @@ package com.dsvag.androidacademyproject.ui.moviedetails
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.RowActorBinding
-import com.dsvag.androidacademyproject.models.credits.Cast
+import com.dsvag.androidacademyproject.models.person.Person
 
 class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
 
-    private val castList: MutableList<Cast> = mutableListOf()
-
+    private val castList: MutableList<Person> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -33,7 +31,7 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
 
     override fun getItemCount(): Int = castList.size
 
-    fun setData(newCastList: List<Cast>) {
+    fun setData(newCastList: List<Person>) {
         castList.apply {
             clear()
             addAll(newCastList)
@@ -45,18 +43,16 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
     class CastViewHolder(private val itemBinding: RowActorBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
-        fun bind(cast: Cast) {
+        fun bind(person: Person) {
             itemBinding.photo.clipToOutline = true
-            itemBinding.photo.background =
-                ContextCompat.getDrawable(itemBinding.root.context, R.drawable.bg_actor_photo)
+            itemBinding.name.text = person.name
 
-            itemBinding.name.text = cast.name
-
-            val url = "https://image.tmdb.org/t/p/h632" + cast.profilePath
+            val url = "https://image.tmdb.org/t/p/h632" + person.profilePath
 
             itemBinding.photo.load(url) {
                 crossfade(true)
                 error(R.drawable.ic_launcher_foreground)
+                placeholder(R.drawable.bg_actor_photo)
             }
         }
     }

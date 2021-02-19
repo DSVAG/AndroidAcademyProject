@@ -88,16 +88,28 @@ object AppModule {
     @Provides
     fun provideMovieRepository(
         apiMovieService: ApiMovieService,
+        apiPersonService: ApiPersonService,
         appDatabase: AppDatabase,
     ): MovieRepository {
-        return MovieRepository(apiMovieService, appDatabase.movieDao())
+        return MovieRepository(
+            apiMovieService,
+            apiPersonService,
+            appDatabase.movieDao(),
+            appDatabase.personDao()
+        )
     }
 
     @Provides
     fun providePersonRepository(
+        apiMovieService: ApiMovieService,
         apiPersonService: ApiPersonService,
         appDatabase: AppDatabase,
     ): PersonRepository {
-        return PersonRepository(apiPersonService, appDatabase.movieDao(), appDatabase.personDao())
+        return PersonRepository(
+            apiPersonService,
+            apiMovieService,
+            appDatabase.personDao(),
+            appDatabase.movieDao()
+        )
     }
 }

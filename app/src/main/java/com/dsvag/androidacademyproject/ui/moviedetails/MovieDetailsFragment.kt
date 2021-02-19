@@ -2,6 +2,7 @@ package com.dsvag.androidacademyproject.ui.moviedetails
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -44,9 +45,13 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private fun stateObserver(state: MovieViewModel.State) {
         when (state) {
-            MovieViewModel.State.Loading -> binding.container.isVisible = false
+            MovieViewModel.State.Loading -> {
+                binding.container.isVisible = false
+                loadingVisibility(true)
+            }
             is MovieViewModel.State.Error -> {
-                findNavController().popBackStack()
+                Toast.makeText(requireContext(), state.msg, Toast.LENGTH_LONG).show()
+                loadingVisibility(false)
             }
             is MovieViewModel.State.Success -> {
                 setMovieData(state.movie)
@@ -70,5 +75,11 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         binding.storyline.text = movie.overview
 
         binding.container.isVisible = true
+        loadingVisibility(false)
+    }
+
+
+    private fun loadingVisibility(visibility: Boolean) {
+        (activity as MainActivity?)?.loadingVisibility(visibility)
     }
 }
