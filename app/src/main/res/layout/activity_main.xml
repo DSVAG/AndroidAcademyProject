@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:trackColor="@color/not_black"
-        app:trackThickness="2dp" />
+        app:trackThickness="2.5dp" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container"

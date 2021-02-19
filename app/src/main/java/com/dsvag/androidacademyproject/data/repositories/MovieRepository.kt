@@ -46,12 +46,14 @@ class MovieRepository @Inject constructor(
     }
 
     suspend fun getMovieCredits(movie: Movie): List<Person> {
+        val persons = mutableListOf<Person>()
+
         val castIds = if (movie.castIds.size > 1) movie.castIds.toList()
         else apiMovieService.getCredits(movie.id).cast.map { it.id }
 
         movieDao.insert(movie.copy(castIds = castIds))
 
-        return castIds.mapNotNull { id ->
+        castIds.forEach { id ->
             var person = personDao.getPersonById(id)
 
             if (person == null) {
@@ -59,8 +61,10 @@ class MovieRepository @Inject constructor(
                 personDao.insert(person)
             }
 
-            person
+            persons.add(person)
         }
+
+        return persons
     }
 
     suspend fun updateCache() {

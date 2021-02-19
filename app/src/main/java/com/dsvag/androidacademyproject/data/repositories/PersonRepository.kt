@@ -34,25 +34,28 @@ class PersonRepository @Inject constructor(
     }
 
     suspend fun getPersonMovies(person: Person): List<Movie> {
+        val movies = mutableListOf<Movie>()
+
         if (person.moviesIds.size > 1) {
-            return person.moviesIds.mapNotNull { id ->
+            person.moviesIds.forEach { id ->
                 var movie = movieDao.getMovieById(id)
                 if (movie == null) {
                     movie = apiMovieService.getMovie(id)
                     movieDao.insert(movie)
                 }
 
-                movie
+                movies.add(movie)
             }
         } else {
-            val movies = apiPersonService.getPersonMovies(person.id)
+            val personMovies = apiPersonService.getPersonMovies(person.id)
 
-            movieDao.insertAll(movies.asCast)
+            movieDao.insertAll(personMovies.asCast)
+            personDao.insert(person.copy(moviesIds = personMovies.asCast.map { it.id }))
 
-            personDao.insert(person.copy(moviesIds = movies.asCast.map { it.id }))
-
-            return movies.asCast
+            movies.addAll(personMovies.asCast)
         }
+
+        return movies
     }
 
     suspend fun updateCache() {
