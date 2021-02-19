@@ -1,5 +1,6 @@
 package com.dsvag.androidacademyproject.ui.moviedetails
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,29 +18,36 @@ import javax.inject.Inject
 class MovieViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
-    private val _mutableMovie = MutableLiveData<Movie>()
-    val movie get() = _mutableMovie
 
-    private val _mutableCast = MutableLiveData<List<Cast>>()
-    val cast get() = _mutableCast
+    private val _state = MutableLiveData<State>()
+    val state: LiveData<State> get() = _state
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         when (throwable) {
             is IOException -> {
-                // "Something went wrong! Check network connection"
+                _state.value = State.Error("Something went wrong! Check network connection")
             }
             is HttpException -> {
-                //"Something went wrong! Try later"
+                _state.value = State.Error("Something went wrong! Server not responding, try later")
             }
         }
     }
 
     fun fetchMovie(movieId: Long) {
+        _state.value = State.Loading
+
         viewModelScope.launch(exceptionHandler) {
             val movie = movieRepository.getMovie(movieId)
+            val movieCredits = movieRepository.getMovieCredits(movieId)
 
-            _mutableMovie.value = movie
-            _mutableCast.value = movieRepository.getMovieCredits(movieId)
+            _state.value = State.Success(movie, movieCredits)
         }
+    }
+
+    sealed class State {
+        object Loading : State()
+
+        data class Success(val movie: Movie, val movieCredits: List<Cast>) : State()
+        data class Error(val msg: String) : State()
     }
 }

@@ -1,5 +1,6 @@
 package com.dsvag.androidacademyproject.ui.person
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,29 +18,36 @@ import javax.inject.Inject
 class PersonViewModel @Inject constructor(
     private val personRepository: PersonRepository,
 ) : ViewModel() {
-    private var _mutablePersonData: MutableLiveData<Person> = MutableLiveData()
-    val personData get() = _mutablePersonData
 
-    private var _mutablePersonMovieData: MutableLiveData<List<Movie>> = MutableLiveData()
-    val personMovieData get() = _mutablePersonMovieData
+    private val _state = MutableLiveData<State>()
+    val state: LiveData<State> get() = _state
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         when (throwable) {
             is IOException -> {
-                // "Something went wrong! Check network connection"
+                _state.value = State.Error("Something went wrong! Check network connection")
             }
             is HttpException -> {
-                //"Something went wrong! Try later"
+                _state.value = State.Error("Something went wrong! Server not responding, try later")
             }
         }
     }
 
     fun fetchPerson(personId: Long) {
+        _state.value = State.Loading
+
         viewModelScope.launch(exceptionHandler) {
             val person = personRepository.getPersonWithMovies(personId)
+            val personMovie = personRepository.getPersonMovies(person.moviesIds)
 
-            _mutablePersonData.value = person
-            _mutablePersonMovieData.value = personRepository.getPersonMovies(person.moviesIds)
+            _state.value = State.Success(person, personMovie)
         }
+    }
+
+    sealed class State {
+        object Loading : State()
+
+        data class Success(val person: Person, val personMovie: List<Movie>) : State()
+        data class Error(val msg: String) : State()
     }
 }

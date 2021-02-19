@@ -2,6 +2,7 @@ package com.dsvag.androidacademyproject.ui.moviedetails
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -29,13 +30,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         binding.castList.addItemDecoration(ItemDecoration(16f))
         binding.castList.adapter = castAdapter
 
-        movieViewModel.movie.observe(viewLifecycleOwner) { movie ->
-            movie?.let { setMovieData(it) }
-        }
-
-        movieViewModel.cast.observe(viewLifecycleOwner) { cast ->
-            cast?.let { castAdapter.setData(it) }
-        }
+        movieViewModel.state.observe(viewLifecycleOwner, ::stateObserver)
 
         binding.back.setOnClickListener {
             findNavController().popBackStack()
@@ -49,6 +44,21 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         movieViewModel.fetchMovie(movieId)
     }
 
+    private fun stateObserver(state: MovieViewModel.State) {
+        when (state) {
+            MovieViewModel.State.Loading -> {
+                binding.container.isVisible = false
+            }
+            is MovieViewModel.State.Error -> {
+                findNavController().popBackStack()
+            }
+            is MovieViewModel.State.Success -> {
+                setMovieData(state.movie)
+                castAdapter.setData(state.movieCredits)
+            }
+        }
+    }
+
     private fun setMovieData(movie: Movie) {
         val url = "https://image.tmdb.org/t/p/w1280" + movie.backdropPath
 
@@ -58,9 +68,11 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         }
 
         binding.title.text = movie.title
-        binding.genres.text = movie.genres?.joinToString(", ") { it.name }
+        binding.genres.text = movie.genres.joinToString { it.name }
         binding.rating.rating = movie.voteAverage.toFloat() / 2
         binding.review.text = movie.voteCount.toString().plus(" Reviews")
         binding.storyline.text = movie.overview
+
+        binding.container.isVisible = true
     }
 }

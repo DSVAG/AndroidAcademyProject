@@ -20,29 +20,29 @@ import kotlin.math.min
 class MoviesViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
-    private val movieList = mutableListOf<Movie>()
 
     private val _state = MutableLiveData<State>(State.Default)
     val state: LiveData<State> get() = _state
+
+    private val movieList = mutableListOf<Movie>()
 
     private var currentQueryType = TopRated
     private var pageCounter = 1
     private var maxPageCounter = 1
 
-
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         when (throwable) {
             is IOException -> {
-                setState(State.Error("Something went wrong! Check network connection"))
+                _state.value = State.Error("Something went wrong! Check network connection")
             }
             is HttpException -> {
-                setState(State.Error("Something went wrong! Try later"))
+                _state.value = State.Error("Something went wrong! Server not responding, try later")
             }
         }
     }
 
     fun fetchNowPlaying() {
-        setState(State.Loading)
+        _state.value = State.Loading
 
         viewModelScope.launch(exceptionHandler) {
             if (currentQueryType != Now) {
@@ -55,7 +55,7 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun fetchPopular() {
-        setState(State.Loading)
+        _state.value = State.Loading
 
         viewModelScope.launch(exceptionHandler) {
             if (currentQueryType != Popular) {
@@ -68,7 +68,7 @@ class MoviesViewModel @Inject constructor(
     }
 
     fun fetchTopRated() {
-        setState(State.Loading)
+        _state.value = State.Loading
 
         viewModelScope.launch(exceptionHandler) {
             if (currentQueryType != TopRated) {
@@ -82,7 +82,7 @@ class MoviesViewModel @Inject constructor(
 
     fun nextPage() {
         if (pageCounter < maxPageCounter) {
-            setState(State.Loading)
+            _state.value = State.Loading
             pageCounter = min(pageCounter + 1, maxPageCounter)
 
             viewModelScope.launch(exceptionHandler) {
@@ -102,20 +102,14 @@ class MoviesViewModel @Inject constructor(
             addAll(movieResponse.movies)
         }
 
-        setState(State.Success(movieList))
+        _state.value = State.Success(movieList)
     }
 
     private fun fetchNextPage(movieResponse: MovieResponse) {
         maxPageCounter = movieResponse.totalResults
         movieList.addAll(movieResponse.movies)
 
-        setState(State.Success(movieList))
-    }
-
-    private fun setState(state: State) {
-        viewModelScope.launch {
-            _state.value = state
-        }
+        _state.value = State.Success(movieList)
     }
 
     sealed class State {

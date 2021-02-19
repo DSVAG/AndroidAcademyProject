@@ -1,10 +1,13 @@
 buildscript {
-    ext.kotlinVersion = "1.4.30"
-    ext.navVersion = "2.3.3"
-    ext.lifecycleVersion = "2.2.0"
-    ext.hiltVersion = "2.31.2-alpha"
-    ext.hiltViewModelVersion = "1.0.0-alpha03"
-    ext.roomVersion = "2.3.0-beta01"
+
+    ext {
+        kotlinVersion = "1.4.30"
+        navVersion = "2.3.3"
+        lifecycleVersion = "2.2.0"
+        daggerVersion = "2.31.2-alpha"
+        hiltVersion = "1.0.0-alpha03"
+        roomVersion = "2.3.0-beta01"
+    }
 
     repositories {
         google()
@@ -16,7 +19,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion"
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerVersion"
     }
 }
 

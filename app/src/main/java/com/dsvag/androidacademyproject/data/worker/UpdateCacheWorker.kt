@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit
 
 @HiltWorker
 class UpdateCacheWorker @AssistedInject constructor(
-    @Assisted private val appContext: Context,
-    @Assisted private val workerParams: WorkerParameters,
+    @Assisted appContext: Context,
+    @Assisted workerParams: WorkerParameters,
     private val personRepository: PersonRepository,
     private val movieRepository: MovieRepository,
 ) : CoroutineWorker(appContext, workerParams) {

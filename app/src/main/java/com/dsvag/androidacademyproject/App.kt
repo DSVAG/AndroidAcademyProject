@@ -15,10 +15,14 @@ class App : Application(), Configuration.Provider {
     lateinit var workerFactory: HiltWorkerFactory
 
     override fun getWorkManagerConfiguration(): Configuration {
-        return Configuration
+        val configuration = Configuration
             .Builder()
             .setWorkerFactory(workerFactory)
             .build()
+
+        WorkManager.initialize(this, configuration)
+
+        return configuration
     }
 
     override fun onCreate() {

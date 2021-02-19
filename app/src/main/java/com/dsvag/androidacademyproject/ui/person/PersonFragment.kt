@@ -2,6 +2,8 @@ package com.dsvag.androidacademyproject.ui.person
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -30,13 +32,7 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
         binding.filmList.addItemDecoration(ItemDecoration(16f))
         binding.filmList.adapter = moviesAdapter
 
-        personViewModel.personData.observe(viewLifecycleOwner) { person ->
-            person?.let { setPersonData(it) }
-        }
-
-        personViewModel.personMovieData.observe(viewLifecycleOwner) { movieCredits ->
-            movieCredits?.let { moviesAdapter.setData(it) }
-        }
+        personViewModel.state.observe(viewLifecycleOwner, ::stateObserver)
 
         binding.back.setOnClickListener {
             findNavController().popBackStack()
@@ -48,6 +44,20 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
         val creditId = arguments?.getLong("castId") ?: 0
 
         personViewModel.fetchPerson(creditId)
+    }
+
+    private fun stateObserver(state: PersonViewModel.State) {
+        when (state) {
+            PersonViewModel.State.Loading -> binding.container.isVisible = false
+            is PersonViewModel.State.Error -> {
+                Toast.makeText(requireContext(), state.msg, Toast.LENGTH_LONG).show()
+                findNavController().popBackStack()
+            }
+            is PersonViewModel.State.Success -> {
+                setPersonData(state.person)
+                moviesAdapter.setData(state.personMovie)
+            }
+        }
     }
 
     private fun setPersonData(person: Person) {
@@ -70,5 +80,7 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
         binding.placeOfBirth.text = person.placeOfBirth
         binding.knownForDepartment.text = person.knownForDepartment
         binding.biography.text = person.biography
+
+        binding.container.isVisible = true
     }
 }
