@@ -46,9 +46,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
 
     private fun stateObserver(state: MovieViewModel.State) {
         when (state) {
-            MovieViewModel.State.Loading -> {
-                binding.container.isVisible = false
-            }
+            MovieViewModel.State.Loading -> binding.container.isVisible = false
             is MovieViewModel.State.Error -> {
                 findNavController().popBackStack()
             }
