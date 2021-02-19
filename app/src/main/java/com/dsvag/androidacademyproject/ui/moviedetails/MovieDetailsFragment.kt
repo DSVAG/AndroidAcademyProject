@@ -25,8 +25,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     private val castAdapter by lazy { CastAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as MainActivity?)?.setBottomViewVisibility(false)
-
         binding.castList.addItemDecoration(ItemDecoration(16f))
         binding.castList.adapter = castAdapter
 

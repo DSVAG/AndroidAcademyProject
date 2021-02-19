@@ -26,8 +26,6 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
     private val movieAdapter by lazy { MovieAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as MainActivity?)?.setBottomViewVisibility(true)
-
         binding.movieList.adapter = movieAdapter
         binding.movieList.addItemDecoration(ItemDecoration(16f))
 
