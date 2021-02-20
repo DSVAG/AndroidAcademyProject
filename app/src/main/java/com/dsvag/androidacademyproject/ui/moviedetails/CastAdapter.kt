@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.RowActorBinding
-import com.dsvag.androidacademyproject.models.person.Person
+import com.dsvag.androidacademyproject.models.credits.Cast
 
 class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
 
-    private val castList: MutableList<Person> = mutableListOf()
+    private val castList: MutableList<Cast> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,7 +31,7 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
 
     override fun getItemCount(): Int = castList.size
 
-    fun setData(newCastList: List<Person>) {
+    fun setData(newCastList: List<Cast>) {
         castList.apply {
             clear()
             addAll(newCastList)
@@ -43,16 +43,16 @@ class CastAdapter : RecyclerView.Adapter<CastAdapter.CastViewHolder>() {
     class CastViewHolder(private val itemBinding: RowActorBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
-        fun bind(person: Person) {
+        fun bind(cast: Cast) {
             itemBinding.photo.clipToOutline = true
-            itemBinding.name.text = person.name
+            itemBinding.name.text = cast.name
 
-            val url = "https://image.tmdb.org/t/p/h632" + person.profilePath
+            val url = "https://image.tmdb.org/t/p/h632" + cast.profilePath
 
             itemBinding.photo.load(url) {
                 crossfade(true)
-                error(R.drawable.ic_launcher_foreground)
                 placeholder(R.drawable.bg_actor_photo)
+                error(R.drawable.ic_launcher_foreground)
             }
         }
     }

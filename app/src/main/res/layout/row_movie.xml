@@ -48,19 +48,6 @@
         tools:rating="2.5" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tags"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:fontFamily="@font/roboto_medium"
-        android:paddingVertical="4dp"
-        android:textColor="@color/red"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/review"
-        app:layout_constraintStart_toStartOf="@+id/rating"
-        tools:text="Action" />
-
-    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/review"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

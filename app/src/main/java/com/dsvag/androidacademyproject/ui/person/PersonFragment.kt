@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.transform.BlurTransformation
-import coil.transform.RoundedCornersTransformation
 import com.dsvag.androidacademyproject.R
 import com.dsvag.androidacademyproject.databinding.FragmentPersonBinding
 import com.dsvag.androidacademyproject.models.person.Person
@@ -48,11 +47,11 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
         when (state) {
             PersonViewModel.State.Loading -> {
                 binding.container.isVisible = false
-                loadingVisibility(true)
+                setLoading(true)
             }
             is PersonViewModel.State.Error -> {
                 Toast.makeText(requireContext(), state.msg, Toast.LENGTH_LONG).show()
-                loadingVisibility(false)
+                setLoading(false)
             }
             is PersonViewModel.State.Success -> {
                 setPersonData(state.person)
@@ -65,6 +64,8 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
         val backdropUrl = "https://image.tmdb.org/t/p/h632" + person.profilePath
         val photoUrl = "https://image.tmdb.org/t/p/h632" + person.profilePath
 
+        binding.photo.clipToOutline = true
+
         binding.backdrop.load(backdropUrl) {
             crossfade(true)
             transformations(BlurTransformation(requireContext()))
@@ -72,7 +73,7 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
 
         binding.photo.load(photoUrl) {
             crossfade(true)
-            transformations(RoundedCornersTransformation(16f))
+            placeholder(R.drawable.bg_actor_photo)
             error(R.drawable.ic_launcher_foreground)
         }
 
@@ -83,10 +84,10 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
         binding.biography.text = person.biography
 
         binding.container.isVisible = true
-        loadingVisibility(false)
+        setLoading(false)
     }
 
-    private fun loadingVisibility(visibility: Boolean) {
+    private fun setLoading(visibility: Boolean) {
         (activity as MainActivity?)?.loadingVisibility(visibility)
     }
 }

@@ -1,7 +1,8 @@
 package com.dsvag.androidacademyproject.data.local.utils
 
 import androidx.room.TypeConverter
-import com.dsvag.androidacademyproject.models.movie.Genre
+import com.dsvag.androidacademyproject.models.credits.Cast
+import com.dsvag.androidacademyproject.models.genre.Genre
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -32,5 +33,23 @@ class MovieTypeConverter {
         val jsonAdapter = moshi.adapter<List<Genre>>(type)
 
         return jsonAdapter.fromJson(genresJson).orEmpty()
+    }
+
+    @TypeConverter
+    fun fromCast(cast: List<Cast>): String {
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        val type = Types.newParameterizedType(List::class.java, Cast::class.java)
+        val jsonAdapter = moshi.adapter<List<Cast>>(type)
+
+        return jsonAdapter.toJson(cast)
+    }
+
+    @TypeConverter
+    fun toCast(castJson: String): List<Cast> {
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        val type = Types.newParameterizedType(List::class.java, Cast::class.java)
+        val jsonAdapter = moshi.adapter<List<Cast>>(type)
+
+        return jsonAdapter.fromJson(castJson).orEmpty()
     }
 }

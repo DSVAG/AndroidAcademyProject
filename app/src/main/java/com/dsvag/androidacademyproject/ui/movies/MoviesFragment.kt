@@ -61,7 +61,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         moviesViewModel.state.observe(viewLifecycleOwner) { state ->
             when (state) {
                 MoviesViewModel.State.Default -> moviesViewModel.fetchNowPlaying()
-                MoviesViewModel.State.Loading -> loadingVisibility(true)
+                MoviesViewModel.State.Loading -> setLoading(true)
                 is MoviesViewModel.State.Success -> isSuccess(state.movies)
                 is MoviesViewModel.State.Error -> showError(state.msg)
             }
@@ -70,15 +70,15 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
     private fun isSuccess(movies: List<Movie>) {
         movieAdapter.setData(movies)
-        loadingVisibility(false)
+        setLoading(false)
     }
 
     private fun showError(msg: String) {
-        loadingVisibility(false)
+        setLoading(false)
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
-    private fun loadingVisibility(visibility: Boolean) {
+    private fun setLoading(visibility: Boolean) {
         (activity as MainActivity?)?.loadingVisibility(visibility)
     }
 }

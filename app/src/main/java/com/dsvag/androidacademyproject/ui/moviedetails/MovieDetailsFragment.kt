@@ -47,15 +47,15 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         when (state) {
             MovieViewModel.State.Loading -> {
                 binding.container.isVisible = false
-                loadingVisibility(true)
+                setLoading(true)
             }
             is MovieViewModel.State.Error -> {
                 Toast.makeText(requireContext(), state.msg, Toast.LENGTH_LONG).show()
-                loadingVisibility(false)
+                setLoading(false)
             }
             is MovieViewModel.State.Success -> {
                 setMovieData(state.movie)
-                castAdapter.setData(state.movieCredits)
+                castAdapter.setData(state.movie.cast)
             }
         }
     }
@@ -75,11 +75,11 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         binding.storyline.text = movie.overview
 
         binding.container.isVisible = true
-        loadingVisibility(false)
+        setLoading(false)
     }
 
 
-    private fun loadingVisibility(visibility: Boolean) {
+    private fun setLoading(visibility: Boolean) {
         (activity as MainActivity?)?.loadingVisibility(visibility)
     }
 }

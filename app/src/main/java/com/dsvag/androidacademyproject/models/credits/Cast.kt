@@ -11,9 +11,6 @@ data class Cast(
     @Json(name = "name")
     val name: String,
 
-    @Json(name = "original_name")
-    val originalName: String,
-
     @Json(name = "profile_path")
     val profilePath: String?,
 )

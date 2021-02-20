@@ -3,7 +3,6 @@ package com.dsvag.androidacademyproject.ui.movies
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -47,12 +46,9 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
         fun bind(movie: Movie) {
             itemBinding.preview.clipToOutline = true
-            itemBinding.preview.background =
-                ContextCompat.getDrawable(itemBinding.root.context, R.drawable.bg_movie)
 
             itemBinding.name.text = movie.title
             itemBinding.adult.isVisible = movie.adult
-            itemBinding.tags.text = movie.genreIds?.joinToString(", ")
             itemBinding.review.text = movie.voteCount.toString().plus(" Reviews")
             itemBinding.rating.rating = movie.voteAverage.toFloat() / 2
 
@@ -60,6 +56,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
             itemBinding.preview.load(url) {
                 crossfade(true)
+                placeholder(R.drawable.bg_movie)
                 error(R.drawable.ic_launcher_foreground)
             }
         }

@@ -3,6 +3,8 @@ package com.dsvag.androidacademyproject.models.movie
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.dsvag.androidacademyproject.models.credits.Cast
+import com.dsvag.androidacademyproject.models.genre.Genre
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -16,10 +18,6 @@ data class Movie(
     @Json(name = "backdrop_path")
     @ColumnInfo(name = "backdrop_path")
     val backdropPath: String?,
-
-    @Json(name = "genre_ids")
-    @ColumnInfo(name = "genre_ids")
-    val genreIds: List<Long> = emptyList(),
 
     @Json(name = "genres")
     @ColumnInfo(name = "genres")
@@ -51,5 +49,5 @@ data class Movie(
     val voteCount: Int,
 
     @ColumnInfo(name = "cast_ids")
-    val castIds: List<Long> = emptyList()
+    val cast: List<Cast> = emptyList()
 )
